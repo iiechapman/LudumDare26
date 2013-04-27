@@ -1,21 +1,7 @@
-//
-//  main.cpp
-//  GLUT Circle Move
-//
-//  Created by Evan Chapman on 2/24/13.
-//  Copyright (c) 2013 Evan Chapman. All rights reserved.
-//
-
-
 /*
  =================
- GLUT Circle Move
- Creates GLUT Window that displays a circle you can move with mouse or keyboard
- 
- Controls:
- WASD  - Move circle up down left and right
- Left Mouse Button/Right Mouse Button - Expand/Shrink Circle
- +-    - Change direction angle of line
+LD 26 Minimalism 
+ By Evan Chapman
  
  =================
  */
@@ -26,8 +12,9 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundSource.hpp>
 #include <GLUT/GLUT.h>
+using namespace std;
 
-const float PI = 3.14159;
+const long double PI = 3.14159;
 
 float VIEW_HEIGHT = 20.0f;  //Height Ratio Lock
 float VIEW_WIDTH  = 0.0f;   //Width Ratio Calculated later
@@ -80,8 +67,13 @@ int main(int argc, char** argv){
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glutDisplayFunc(Display); //Set display function
     sf::Music music;
-    
 
+    if (!music.openFromFile("ataraxia.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    music.play();
+    
     glutMainLoop();
     return 0;
 }
@@ -90,8 +82,8 @@ int main(int argc, char** argv){
 void Display(){
     glClear(GL_COLOR_BUFFER_BIT);
     
-    float timeElapsed = glutGet(GLUT_ELAPSED_TIME) * 0.001f;
-    float finalRadius = cr * cosf(timeElapsed);
+    //float timeElapsed = glutGet(GLUT_ELAPSED_TIME) * 0.001f;
+    float finalRadius = cr * cosf(1);
     
     int sections = 5;
     float R,G,B;

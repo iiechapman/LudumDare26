@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E059836172B9C6100ADD283 /* mobileIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4E059835172B9C6100ADD283 /* mobileIcon.icns */; };
+		4E059838172B9D0200ADD283 /* Ataraxia.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E059837172B9D0200ADD283 /* Ataraxia.ogg */; };
+		4E05983E172BA19200ADD283 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E05983D172BA19200ADD283 /* sfml-audio.framework */; };
+		4E059842172BA5EE00ADD283 /* sndfile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E059841172BA5EE00ADD283 /* sndfile.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4E0BA2E9172B8A3400BB865E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2E8172B8A3400BB865E /* Foundation.framework */; };
 		4E0BA2EC172B8A3400BB865E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BA2EB172B8A3400BB865E /* main.cpp */; };
 		4E0BA2EE172B8A3400BB865E /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BA2ED172B8A3400BB865E /* ResourcePath.mm */; };
 		4E0BA2F4172B8A3400BB865E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E0BA2F2172B8A3400BB865E /* InfoPlist.strings */; };
-		4E0BA2FC172B8F0100BB865E /* libsfml-audio.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2FA172B8F0100BB865E /* libsfml-audio.2.0.dylib */; };
-		4E0BA2FD172B8F0100BB865E /* libsfml-system.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2FB172B8F0100BB865E /* libsfml-system.2.0.dylib */; };
 		4E0BA2FF172B8F7D00BB865E /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2FE172B8F7D00BB865E /* GLUT.framework */; };
 		4E0BA301172B8F8400BB865E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA300172B8F8400BB865E /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E059835172B9C6100ADD283 /* mobileIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = mobileIcon.icns; sourceTree = "<group>"; };
+		4E059837172B9D0200ADD283 /* Ataraxia.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ataraxia.ogg; path = "../../../../Game Design/LD26 Minimalism/Ataraxia.ogg"; sourceTree = "<group>"; };
+		4E05983D172BA19200ADD283 /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "../../../../../../../Library/Frameworks/sfml-audio.framework"; sourceTree = SOURCE_ROOT; };
+		4E059841172BA5EE00ADD283 /* sndfile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sndfile.framework; path = "../../../../../SFMl/extlibs/libs-osx/Frameworks/sndfile.framework"; sourceTree = SOURCE_ROOT; };
 		4E0BA2E5172B8A3400BB865E /* LD26Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD26Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0BA2E8172B8A3400BB865E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4E0BA2EB172B8A3400BB865E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -25,8 +31,6 @@
 		4E0BA2EF172B8A3400BB865E /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		4E0BA2F1172B8A3400BB865E /* LD26Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LD26Test-Info.plist"; sourceTree = "<group>"; };
 		4E0BA2F3172B8A3400BB865E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4E0BA2FA172B8F0100BB865E /* libsfml-audio.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-audio.2.0.dylib"; path = "../../../../../../../usr/local/lib/libsfml-audio.2.0.dylib"; sourceTree = "<group>"; };
-		4E0BA2FB172B8F0100BB865E /* libsfml-system.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-system.2.0.dylib"; path = "../../../../../../../usr/local/lib/libsfml-system.2.0.dylib"; sourceTree = "<group>"; };
 		4E0BA2FE172B8F7D00BB865E /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		4E0BA300172B8F8400BB865E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -36,10 +40,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E059842172BA5EE00ADD283 /* sndfile.framework in Frameworks */,
+				4E05983E172BA19200ADD283 /* sfml-audio.framework in Frameworks */,
 				4E0BA301172B8F8400BB865E /* OpenGL.framework in Frameworks */,
 				4E0BA2FF172B8F7D00BB865E /* GLUT.framework in Frameworks */,
-				4E0BA2FC172B8F0100BB865E /* libsfml-audio.2.0.dylib in Frameworks */,
-				4E0BA2FD172B8F0100BB865E /* libsfml-system.2.0.dylib in Frameworks */,
 				4E0BA2E9172B8A3400BB865E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,16 +51,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E059844172BA79E00ADD283 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4E059837172B9D0200ADD283 /* Ataraxia.ogg */,
+			);
+			name = Resources;
+			path = LD26Test;
+			sourceTree = "<group>";
+		};
 		4E0BA2DB172B8A3400BB865E = {
 			isa = PBXGroup;
 			children = (
+				4E059835172B9C6100ADD283 /* mobileIcon.icns */,
 				4E0BA300172B8F8400BB865E /* OpenGL.framework */,
 				4E0BA2FE172B8F7D00BB865E /* GLUT.framework */,
-				4E0BA2FA172B8F0100BB865E /* libsfml-audio.2.0.dylib */,
-				4E0BA2FB172B8F0100BB865E /* libsfml-system.2.0.dylib */,
 				4E0BA2EA172B8A3400BB865E /* LD26Test */,
 				4E0BA2E7172B8A3400BB865E /* Frameworks */,
 				4E0BA2E6172B8A3400BB865E /* Products */,
+				4E059844172BA79E00ADD283 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +84,8 @@
 		4E0BA2E7172B8A3400BB865E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4E059841172BA5EE00ADD283 /* sndfile.framework */,
+				4E05983D172BA19200ADD283 /* sfml-audio.framework */,
 				4E0BA2E8172B8A3400BB865E /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -149,6 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E0BA2F4172B8A3400BB865E /* InfoPlist.strings in Resources */,
+				4E059836172B9C6100ADD283 /* mobileIcon.icns in Resources */,
+				4E059838172B9D0200ADD283 /* Ataraxia.ogg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +225,10 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					/usr/local/lib,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -222,8 +243,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(HEADER_SEARCH_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -235,7 +260,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SFML_AUDIO = "";
+				SFML_AUDIO = "$(SFML_LINK_PREFIX)sfml-audio$(SFML_LINK_SUFFIX)";
 				SFML_LINK_DYLIBS_PREFIX = "-l";
 				SFML_LINK_DYLIBS_SUFFIX = "-d";
 				SFML_LINK_FRAMEWORKS_PREFIX = "-framework ";
@@ -263,6 +288,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					/usr/local/lib,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -270,8 +299,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(HEADER_SEARCH_PATHS)";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(SFML_SYSTEM)",
@@ -282,7 +315,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SFML_AUDIO = "";
+				SFML_AUDIO = "$(SFML_LINK_PREFIX)sfml-audio$(SFML_LINK_SUFFIX)";
 				SFML_LINK_DYLIBS_PREFIX = "-l";
 				SFML_LINK_DYLIBS_SUFFIX = "";
 				SFML_LINK_FRAMEWORKS_PREFIX = "-framework ";
@@ -298,14 +331,24 @@
 		4E0BA2F8172B8A3400BB865E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"\"$(SRCROOT)/../../../../../SFMl/extlibs/libs-osx/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "LD26Test/LD26Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -313,13 +356,23 @@
 		4E0BA2F9172B8A3400BB865E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"\"$(SRCROOT)/../../../../../SFMl/extlibs/libs-osx/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					/usr/local/include,
+				);
 				INFOPLIST_FILE = "LD26Test/LD26Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -343,6 +396,7 @@
 				4E0BA2F9172B8A3400BB865E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
