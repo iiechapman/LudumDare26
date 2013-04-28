@@ -24,8 +24,11 @@ using namespace std;
 enum GameState{intro,splashludum,splashlogo,title,levelselect,game,win,lose,quit};
 GameState gameState = game;
 bool gameFlipped = false;
-unsigned int level = 1;
-unsigned int gameSpeed = 50;
+int level = 1;
+int gameSpeed = 100;
+
+unsigned int combo;
+unsigned int maxCombo;
 
 enum colors {white,red,green,blue};
 
@@ -41,7 +44,7 @@ float lineFullTime = 1;
 bool lineReset;
 float lineTimer;
 
-float centerLane = 495;
+float centerLane = 475;
 
 float VIEW_HEIGHT = 20.0f;  //Height Ratio Lock
 float VIEW_WIDTH  = 0.0f;   //Width Ratio Calculated later
@@ -50,6 +53,14 @@ int WINDOWWIDTH = 640;
 int WINDOWHEIGHT = 480;
 float rad = 0;
 int numberOfShapes;
+
+sf::Music music;
+sf::Music powerTune;
+sf::Music beep;
+sf::Music powerDown;
+sf::Music boop;
+sf::Music highBeep;
+
 
 bool LEFT_MOUSE_DOWN;
 bool HELD_MOUSE;
@@ -64,7 +75,7 @@ bool PRESS_MINUS;
 bool PRESS_SPACE;
 
 bool pup,pdown,pleft,pright;
-
+bool fullscreen = false;
 
 float cx,cy,cr,cspeed;
 float angle= 0;
@@ -105,9 +116,10 @@ int main(int argc, char** argv){
     
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowPosition(0, 0);
+    glutInitWindowPosition(400, 400);
     glutInitWindowSize(WINDOWWIDTH, WINDOWHEIGHT);
     glutCreateWindow("LD26 Minimalism");
+
     
     //Set GLUT Utility Functions
 
@@ -119,13 +131,39 @@ int main(int argc, char** argv){
     
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glutDisplayFunc(Display); //Set display function
-    sf::Music music;
 
-    if (!music.openFromFile("ataraxia.ogg")) {
+    if (fullscreen){
+        glutFullScreen();
+    }
+    
+    if (!powerTune.openFromFile("powerUp.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+
+
+    if (!music.openFromFile("jam.ogg")) {
         cout << "Error loading song..." << endl;
     }
     
-    //music.play();
+    music.setLoop(true);
+    
+    if (!beep.openFromFile("beep.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    if (!powerDown.openFromFile("powerDown.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    if (!boop.openFromFile("boop.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    if (!highBeep.openFromFile("highBeep.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    music.play();
     Init();
     glutMainLoop();
     return 0;
@@ -135,7 +173,7 @@ void Init(){
     srand((unsigned int)time(NULL));
     player = new Square();
     player->x = WINDOWWIDTH/2;
-    player->y = 50;
+    player->y = 80;
     player->size = 20;
     player->active = true;
     player->unique = true;
@@ -146,6 +184,15 @@ void Init(){
     player->vx = 0;
     
     objects.push_back(player);
+    
+    srand((unsigned int)time(NULL));
+    
+    int randomize = 1 + rand()%100;
+    
+    for (int i = 0; i < randomize ; i ++){
+        rand();
+    }
+
     
 }
 
@@ -187,7 +234,7 @@ void GameLoop(){
             
             
         default:
-            cout << "GAME STATE LOOP" << endl;
+           // cout << "GAME STATE LOOP" << endl;
             break;
     }
     
@@ -205,7 +252,7 @@ void GameLoop(){
 //cout << "X " << player->x << " y " << player->y << endl
     //cout << "timer " << timer << endl;
     //cout << "reset timer " << resetTimer << endl;
-    
+  // cout << "angle :"  << angle << endl;
     
     UpdateScene();
     CheckCollisions();
@@ -263,8 +310,8 @@ void Display(){
     }
     glClear(GL_COLOR_BUFFER_BIT);
 
-   
-    
+    DrawTimer();
+
     for (auto i = objects.begin() ; i != objects.end() ; i++){
         (*i)->Draw();
     }
@@ -272,23 +319,50 @@ void Display(){
     player->Draw();
    
     
-     DrawTimer();
+    
+    if (combo > maxCombo){
+        maxCombo = combo;
+    }
     
     //Draw text
     char string[120];
-    sprintf(string,"Score %d", level);
-    char* buffer = string;
+    char * buffer;
     
-    if (!gameFlipped){
-        glColor3f(0.0f,0.0f,0.0f);
-    } else {
-        glColor3f(0.0f,0.0f,0.0f);
+    glColor3f(1.0, 1.0, 1.0);
+    
+//    sprintf(string,"S-%d", level);
+//    buffer = string;
+//    glRasterPos2f(centerLane, 300);
+//    for (int i = 0; i < strlen(buffer); i ++){
+//        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
+//    }
+//    
+//    
+//    sprintf(string,"M-%d", maxCombo);
+//    buffer = string;
+//    glRasterPos2f(centerLane, 320);
+//    for (int i = 0; i < strlen(buffer); i ++){
+//        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
+//    }
+    
+    if (combo > 0){
+        sprintf(string,"%d", combo);
+        buffer = string;
+        glRasterPos2f(99, 231);
+        for (int i = 0; i < strlen(buffer); i ++){
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
+        }
     }
-    glRasterPos2f(0, 2);
     
+    
+    sprintf(string,"-Traffic Jam-");
+    buffer = string;
+    glRasterPos2f(15, 10);
     for (int i = 0; i < strlen(buffer); i ++){
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
     }
+    
+    
     
     //GL END
     glutSwapBuffers();
@@ -447,6 +521,15 @@ void DrawDisk(float cx, float cy, float r, float R, float G, float B){
 void UpdateScene(){
     
     
+    cr = 300 + 20 * combo;
+    cx = 100 - combo;
+    
+    char title[1024];
+    sprintf(title, "Max Combo - %d" , maxCombo);
+    
+    glutSetWindowTitle(title);
+
+    
     switch (currentColor) {
         case white:
             player->R = 1.0f;
@@ -496,15 +579,40 @@ void UpdateScene(){
             break;
     }
     
-    angle -= cspeed * gameSpeed * delta;
+    angle -= cspeed * gameSpeed * .1 * delta;
     fmod(angle, 360.0f);
    // cout << angle << endl;
     
-    if (angle < -4.5){
+    if (angle < -4.7){
         angle = 1.6;
         int selectColor = random() % 4;
+        //highBeep.setPitch(2);
+        highBeep.play();
         currentColor = (colors)selectColor;
+        gameSpeed-=200;
+        if (gameSpeed < 100){
+            gameSpeed = 100;
+        }
     }
+    
+    
+//    if (angle <= -3 && angle >= -4 ){
+//        if (beep.getStatus() == 0){
+//            beep.play();
+//        }
+//    }
+    
+    if (angle < -1.5){
+        beep.setPitch(abs(angle));
+        beep.setVolume(abs(angle)*10);
+        
+        if (beep.getStatus() == 0){
+            beep.play();
+        }
+    }
+    
+    
+
     
     timer-=delta;
     lineTimer -=delta;
@@ -555,7 +663,7 @@ void UpdateScene(){
         testSquare = new Square();
         testSquare->x = centerLane;
         testSquare->y = 500;
-        testSquare->size = 20;
+        testSquare->size = 30;
         testSquare->unique = true;
         testSquare->R = 0.5;
         testSquare->G = 0.5;
@@ -566,15 +674,15 @@ void UpdateScene(){
         testSquare = 0;
         
         
-        int side = random()% 3;
+        int side = random()% 4;
         int type = random()% 4;
         
         //cout << "side " << side << endl;
         testSquare = new Square();
         
         if (side == 0){
-        testSquare->x = centerLane + 50 ;
-        } else {
+        testSquare->x = centerLane + 70 ;
+        } else if (side ==1) {
             testSquare->x = centerLane - 100 ;
         }
         
@@ -610,8 +718,8 @@ void UpdateScene(){
                 break;
         }
         
-        int rVertical = random() % 1;
-        testSquare->y = 580 + rVertical * 10;
+        //int rVertical = random() % 10;
+        testSquare->y = 580 ;
         testSquare->size = 50;
         testSquare->vy = -10;
         testSquare->active = true;
@@ -627,15 +735,18 @@ void UpdateScene(){
     }
     
     if (PRESS_SPACE){
-        delta = 0;
+        gameFlipped = true;
+    } else {
+        gameFlipped = false;
     }
+    
     
     
     //switch sides when pressed
     if (gameFlipped){
-        player->x = centerLane - 70;
+        player->x = centerLane - 85;
     } else {
-        player->x = centerLane  + 70;
+        player->x = centerLane  + 85;
     }
     
     
@@ -643,11 +754,12 @@ void UpdateScene(){
         (*i)->Update(delta);
         
         if ((*i) != player){
-            (*i)->vy = - (.5 + gameSpeed*1) ;
+            (*i)->vy = - (.5 + gameSpeed*1);
         }
         
         if ((*i)->y < 0 +(*i)->size){
             i = objects.erase(i);
+            boop.play();
            
         } else {
             i++;
@@ -670,10 +782,7 @@ void UpdateScene(){
     }
     
     if (LEFT_MOUSE_DOWN){
-       gameFlipped = true;
-
-    } else {
-        gameFlipped = false;
+        delta = 0;
     }
     
     if(RIGHT_MOUSE_DOWN){
@@ -685,9 +794,7 @@ void UpdateScene(){
     }
     
     if (PRESS_MINUS){
-        angle += cspeed/10;
-        fmod(angle, 360.0f);
-        //std::cout << "Angle: " << angle << "\n";
+
     }
 }
 
@@ -700,23 +807,32 @@ void CheckCollisions(){
             
             //if player collides with object of same color then score goes up
             if (player->overlapping && test->currentColor == currentColor){
-                level++;
-                gameSpeed += 50;
-                
                 objects.erase(i);
+                angle -= cspeed * gameSpeed * 10 * delta;
+                gameSpeed += 50;
+                combo++;
+                level+= 1 * combo;
+                powerTune.play();
+                //powerTune.setPitch(10);
             }
             
             //if player collides with object of same color then score goes down
             if (player->overlapping && test->currentColor != currentColor){
                 level--;
                 gameSpeed-=100;
-                objects.erase(i);
-                if (gameSpeed< 50) {
-                    gameSpeed = 50;
+                
+                if (gameSpeed <= 100) {
+                    gameSpeed = 100;
                 }
+                
                 if (level< 1){
                     level = 1;
                 }
+                objects.erase(i);
+                combo = 0;
+                powerDown.play();
+                
+    
             }
         }
     }
