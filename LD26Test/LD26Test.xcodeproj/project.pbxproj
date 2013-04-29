@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E059836172B9C6100ADD283 /* mobileIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4E059835172B9C6100ADD283 /* mobileIcon.icns */; };
 		4E05983E172BA19200ADD283 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E05983D172BA19200ADD283 /* sfml-audio.framework */; };
 		4E059842172BA5EE00ADD283 /* sndfile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E059841172BA5EE00ADD283 /* sndfile.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4E0BA2E9172B8A3400BB865E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2E8172B8A3400BB865E /* Foundation.framework */; };
@@ -23,12 +22,14 @@
 		4E0D94A4172CE2300027F78D /* highbeep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D94A3172CE2300027F78D /* highbeep.ogg */; };
 		4E0D94A8172CEF7A0027F78D /* jam.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D94A7172CEF7A0027F78D /* jam.ogg */; };
 		4E2481AF172C29D900F9ADFE /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E2481AD172C29D900F9ADFE /* Shape.cpp */; };
+		4E53D76F172DC053007AA621 /* screechleft.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D76D172DC053007AA621 /* screechleft.ogg */; };
+		4E53D770172DC053007AA621 /* screechright.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D76E172DC053007AA621 /* screechright.ogg */; };
+		4E53D772172DFA03007AA621 /* icon1.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D771172DFA03007AA621 /* icon1.icns */; };
 		4E8D6B14172C3D7E0036F7C1 /* sndfile.framework in Resources */ = {isa = PBXBuildFile; fileRef = 4E059841172BA5EE00ADD283 /* sndfile.framework */; };
 		4E8D6B15172C3D7E0036F7C1 /* sfml-audio.framework in Resources */ = {isa = PBXBuildFile; fileRef = 4E05983D172BA19200ADD283 /* sfml-audio.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4E059835172B9C6100ADD283 /* mobileIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = mobileIcon.icns; sourceTree = "<group>"; };
 		4E05983D172BA19200ADD283 /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "../../../../../../../Library/Frameworks/sfml-audio.framework"; sourceTree = SOURCE_ROOT; };
 		4E059841172BA5EE00ADD283 /* sndfile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sndfile.framework; path = "../../../../../SFMl/extlibs/libs-osx/Frameworks/sndfile.framework"; sourceTree = SOURCE_ROOT; };
 		4E0BA2E5172B8A3400BB865E /* LD26Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD26Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +49,9 @@
 		4E0D94A7172CEF7A0027F78D /* jam.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = jam.ogg; path = ../../../../../../Desktop/jam.ogg; sourceTree = "<group>"; };
 		4E2481AD172C29D900F9ADFE /* Shape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shape.cpp; sourceTree = "<group>"; };
 		4E2481AE172C29D900F9ADFE /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		4E53D76D172DC053007AA621 /* screechleft.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechleft.ogg; path = ../../../../../../Desktop/screechleft.ogg; sourceTree = "<group>"; };
+		4E53D76E172DC053007AA621 /* screechright.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechright.ogg; path = ../../../../../../Desktop/screechright.ogg; sourceTree = "<group>"; };
+		4E53D771172DFA03007AA621 /* icon1.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon1.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 		4E059844172BA79E00ADD283 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4E53D76D172DC053007AA621 /* screechleft.ogg */,
+				4E53D76E172DC053007AA621 /* screechright.ogg */,
 				4E0D94A7172CEF7A0027F78D /* jam.ogg */,
 				4E0D94A3172CE2300027F78D /* highbeep.ogg */,
 				4E0D949D172CD4BD0027F78D /* boop.ogg */,
@@ -83,7 +89,7 @@
 		4E0BA2DB172B8A3400BB865E = {
 			isa = PBXGroup;
 			children = (
-				4E059835172B9C6100ADD283 /* mobileIcon.icns */,
+				4E53D771172DFA03007AA621 /* icon1.icns */,
 				4E0BA300172B8F8400BB865E /* OpenGL.framework */,
 				4E0BA2FE172B8F7D00BB865E /* GLUT.framework */,
 				4E0BA2EA172B8A3400BB865E /* LD26Test */,
@@ -188,13 +194,15 @@
 				4E8D6B14172C3D7E0036F7C1 /* sndfile.framework in Resources */,
 				4E8D6B15172C3D7E0036F7C1 /* sfml-audio.framework in Resources */,
 				4E0BA2F4172B8A3400BB865E /* InfoPlist.strings in Resources */,
-				4E059836172B9C6100ADD283 /* mobileIcon.icns in Resources */,
 				4E0D9498172CD1A90027F78D /* beep.ogg in Resources */,
 				4E0D949A172CD3960027F78D /* powerdown.ogg in Resources */,
 				4E0D949C172CD4540027F78D /* powerup.ogg in Resources */,
 				4E0D949E172CD4BD0027F78D /* boop.ogg in Resources */,
 				4E0D94A4172CE2300027F78D /* highbeep.ogg in Resources */,
 				4E0D94A8172CEF7A0027F78D /* jam.ogg in Resources */,
+				4E53D76F172DC053007AA621 /* screechleft.ogg in Resources */,
+				4E53D770172DC053007AA621 /* screechright.ogg in Resources */,
+				4E53D772172DFA03007AA621 /* icon1.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

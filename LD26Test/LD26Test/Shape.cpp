@@ -13,6 +13,7 @@ using namespace std;
 
 
 void Square::Draw(){
+    glLineWidth(.5);
     glBegin(GL_QUADS);
     
     if (active){
@@ -25,10 +26,39 @@ void Square::Draw(){
         glColor3f(R, G, B);
     }
     
+    
+    //for (int i = sections ; i > 1 ; i--){
+    
+    glColor3f(R, G, B);
+    
     glVertex2f(x, y);
-    glVertex2f(x, y - size);
-    glVertex2f(x + size, y - size);
-    glVertex2f(x + size, y);
+    glVertex2f(x, (y - sizey));
+    glVertex2f(x + sizex, y - sizey);
+    glVertex2f(x + sizex, y);
+    
+    glEnd();
+    
+    
+    glLineWidth(4);
+    glBegin(GL_LINES);
+
+    glColor3f(R/2, G/2, B/2 );
+    //left line
+    glVertex2f(x, y);
+    glVertex2f(x, y - sizey);
+    
+    //right line
+    glVertex2f(x + sizex, y - sizey);
+    glVertex2f(x + sizex, y);
+    
+    
+    //top
+    glVertex2f(x,y);
+    glVertex2f(x+ sizex, y);
+    
+    //bottom
+    glVertex2f(x, y - sizey);
+    glVertex2f(x + sizex, y - sizey);
     
     glEnd();
     
@@ -37,7 +67,7 @@ void Square::Draw(){
     } else {
         glColor3f(0, 0, 0);
     }
-
+    
     
 }
 
@@ -100,10 +130,10 @@ bool Square::Collide(Shape &rhs){
         
 
         //check if overlapping
-        if (x + size >= rhs.x  &&
-            x <= rhs.x + rhs.size &&
-            y - size <= rhs.y &&
-            y >= rhs.y - rhs.size){
+        if (x + sizex >= rhs.x  &&
+            x <= rhs.x + rhs.sizex &&
+            y - sizey <= rhs.y &&
+            y >= rhs.y - rhs.sizey){
             //cout << "overlapping" << endl;
             overlapping = true;
         } else {
@@ -124,9 +154,9 @@ bool Square::Collide(Shape &rhs){
         entering = false;
         
         if (y >= rhs.y||
-            y - size <= rhs.y - rhs.size ||
+            y - sizey <= rhs.y - rhs.sizey ||
             x <= rhs.x ||
-            x+size >= rhs.x){
+            x+sizex >= rhs.x){
             internalCollision = true;
         }
     } else {
@@ -136,9 +166,9 @@ bool Square::Collide(Shape &rhs){
 
     
     //check if inside other object
-    if (x + size < rhs.x + rhs.size  &&
+    if (x + sizex < rhs.x + rhs.sizex  &&
         x > rhs.x &&
-        y - size > rhs.y - rhs.size &&
+        y - sizey > rhs.y - rhs.sizey &&
         y < rhs.y){
         //cout << "inside" << endl;
         inside = true;

@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>mobileIcon</string>
+	<string>icon1</string>
 	<key>CFBundleIdentifier</key>
-	<string>Edu.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>vindince.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1</string>
+	<string>2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>LSApplicationCategoryType</key>

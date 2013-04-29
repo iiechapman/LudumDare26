@@ -25,15 +25,24 @@ enum GameState{intro,splashludum,splashlogo,title,levelselect,game,win,lose,quit
 GameState gameState = game;
 bool gameFlipped = false;
 int level = 1;
-int gameSpeed = 100;
+int difficulty = 4;
+int gameSpeed = difficulty * 150;
 
 unsigned int combo;
 unsigned int maxCombo;
 
-enum colors {white,red,green,blue};
+bool movingRight;
+bool movingLeft = true;
+
+int sections = 5 * difficulty;
+
+enum colors {white,red,green,blue,purple};
+int selectColor;
+
 
 
 colors currentColor = white;
+
 float timerR , timerG , timerB;
 
 float fullTime = 1;
@@ -44,13 +53,13 @@ float lineFullTime = 1;
 bool lineReset;
 float lineTimer;
 
-float centerLane = 475;
-
 float VIEW_HEIGHT = 20.0f;  //Height Ratio Lock
 float VIEW_WIDTH  = 0.0f;   //Width Ratio Calculated later
 
-int WINDOWWIDTH = 640;
-int WINDOWHEIGHT = 480;
+int WINDOWWIDTH = 1024;
+int WINDOWHEIGHT = 768;
+float centerLane = WINDOWWIDTH/2;
+
 float rad = 0;
 int numberOfShapes;
 
@@ -60,7 +69,8 @@ sf::Music beep;
 sf::Music powerDown;
 sf::Music boop;
 sf::Music highBeep;
-
+sf::Music screechRight;
+sf::Music screechLeft;
 
 bool LEFT_MOUSE_DOWN;
 bool HELD_MOUSE;
@@ -73,11 +83,12 @@ bool PRESS_RIGHT;
 bool PRESS_PLUS;
 bool PRESS_MINUS;
 bool PRESS_SPACE;
+bool PRESS_ESCAPE;
 
 bool pup,pdown,pleft,pright;
 bool fullscreen = false;
 
-float cx,cy,cr,cspeed;
+float cx,cy,cr,cspeed,cradius;
 float angle= 0;
 int par = 10;
 float delta;
@@ -115,7 +126,7 @@ int main(int argc, char** argv){
     angle   =   0.0f; // "North"
     
     glutInit(&argc,argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(400, 400);
     glutInitWindowSize(WINDOWWIDTH, WINDOWHEIGHT);
     glutCreateWindow("LD26 Minimalism");
@@ -163,7 +174,18 @@ int main(int argc, char** argv){
         cout << "Error loading song..." << endl;
     }
     
+    
+    if (!screechRight.openFromFile("screechRight.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
+    
+    if (!screechLeft.openFromFile("screechLeft.ogg")) {
+        cout << "Error loading song..." << endl;
+    }
+    
     music.play();
+    
     Init();
     glutMainLoop();
     return 0;
@@ -172,9 +194,11 @@ int main(int argc, char** argv){
 void Init(){
     srand((unsigned int)time(NULL));
     player = new Square();
+    player->sections = 4;
     player->x = WINDOWWIDTH/2;
-    player->y = 80;
-    player->size = 20;
+    player->sizex = 40;
+    player->sizey = 80;
+    player->y = player->sizey + 10;
     player->active = true;
     player->unique = true;
     player->R = 1.0;
@@ -187,12 +211,16 @@ void Init(){
     
     srand((unsigned int)time(NULL));
     
-    int randomize = 1 + rand()%100;
+    int randomize = 0 + (int) (100.0 * (rand() / (RAND_MAX + 1.0)));
     
     for (int i = 0; i < randomize ; i ++){
         rand();
     }
 
+    selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+    
+    
+    currentColor = (colors)selectColor;
     
 }
 
@@ -201,10 +229,15 @@ void GameLoop(){
     //Calculate time before draw
     CalculateDrawTime();
     
+    if (PRESS_ESCAPE){
+        glutDestroyWindow(1);
+        exit(0);
+    }
+    
     switch (gameState) {
             
         case intro:
-            
+        
             break;
             
         case title:
@@ -220,7 +253,8 @@ void GameLoop(){
             break;
             
         case game:
-            
+            UpdateScene();
+            CheckCollisions();
             break;
             
         case win:
@@ -254,8 +288,7 @@ void GameLoop(){
     //cout << "reset timer " << resetTimer << endl;
   // cout << "angle :"  << angle << endl;
     
-    UpdateScene();
-    CheckCollisions();
+
     glutPostRedisplay();
     
     //Calculate time after draw
@@ -282,7 +315,7 @@ void DrawTimer(){
     
     //Draw circle code
     float finalRadius = cr * cosf(1);
-    int sections = 4;
+
 
     for (float i = sections; i > 0; i--) {
         DrawDisk(cx, cy,
@@ -329,26 +362,12 @@ void Display(){
     char * buffer;
     
     glColor3f(1.0, 1.0, 1.0);
-    
-//    sprintf(string,"S-%d", level);
-//    buffer = string;
-//    glRasterPos2f(centerLane, 300);
-//    for (int i = 0; i < strlen(buffer); i ++){
-//        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
-//    }
-//    
-//    
-//    sprintf(string,"M-%d", maxCombo);
-//    buffer = string;
-//    glRasterPos2f(centerLane, 320);
-//    for (int i = 0; i < strlen(buffer); i ++){
-//        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
-//    }
+
     
     if (combo > 0){
         sprintf(string,"%d", combo);
         buffer = string;
-        glRasterPos2f(99, 231);
+        glRasterPos2f(WINDOWWIDTH/2 - 2, WINDOWHEIGHT/2 - 12);
         for (int i = 0; i < strlen(buffer); i ++){
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
         }
@@ -361,8 +380,7 @@ void Display(){
     for (int i = 0; i < strlen(buffer); i ++){
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
     }
-    
-    
+
     
     //GL END
     glutSwapBuffers();
@@ -411,6 +429,10 @@ void OnKeyPress(unsigned char key , int x, int y){
             
         case 32:
             PRESS_SPACE = true;
+            break;
+            
+        case 27:
+            PRESS_ESCAPE = true;
             break;
             
     }
@@ -519,10 +541,40 @@ void DrawDisk(float cx, float cy, float r, float R, float G, float B){
 
 
 void UpdateScene(){
+    if (gameSpeed <= 200) {
+        gameSpeed = 200;
+    }
+    //cr = 200;
+    cx = WINDOWWIDTH/2;
+    //check if radius is too small
+    
+    if (cradius < -gameSpeed){
+        cradius = -gameSpeed;
+    }
+
+    cr =  cradius + (200 * combo + 2 );
+    
+    if (cr > 12000){
+        cr = 12000;
+    }
+    
+//    if (cr <= cradius){
+//        cr = 0;
+//        cradius = 0;
+//    }
+    
+    //cout << " Cr "  << cr << " Cradius " << cradius << endl;
+    
+    if (cr < 100){
+        cr = 100;
+    }
+    
+
     
     
-    cr = 300 + 20 * combo;
-    cx = 100 - combo;
+//    if (cradius < 1){
+//        cradius = 1;
+//    }
     
     char title[1024];
     sprintf(title, "Max Combo - %d" , maxCombo);
@@ -575,24 +627,49 @@ void UpdateScene(){
 
             break;
             
+        case purple:
+            //R+B
+            player->R = 1.0f;
+            player->G = 0.0f;
+            player->B = 1.0f;
+            
+            timerR = 1.0f;
+            timerG = 0.0f;
+            timerB = 1.0f;
+            
+            break;
+            
+            
         default:
             break;
     }
     
-    angle -= cspeed * gameSpeed * .1 * delta;
+    cradius-= delta * gameSpeed * .15;
+    angle -= cspeed * gameSpeed * .8 * delta;
     fmod(angle, 360.0f);
    // cout << angle << endl;
     
     if (angle < -4.7){
         angle = 1.6;
-        int selectColor = random() % 4;
+        
+        
         //highBeep.setPitch(2);
+        highBeep.setVolume(50);
         highBeep.play();
+        
+        selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+           
+            while (selectColor == currentColor){
+                 selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+            }
         currentColor = (colors)selectColor;
-        gameSpeed-=200;
-        if (gameSpeed < 100){
-            gameSpeed = 100;
-        }
+        
+        gameSpeed-= gameSpeed * .25;
+        
+        cradius -= 10;
+        //cradius = 0;
+
+
     }
     
     
@@ -602,7 +679,7 @@ void UpdateScene(){
 //        }
 //    }
     
-    if (angle < -1.5){
+    if (angle < -0.5){
         beep.setPitch(abs(angle));
         beep.setVolume(abs(angle)*10);
         
@@ -612,27 +689,18 @@ void UpdateScene(){
     }
     
     
-
-    
     timer-=delta;
     lineTimer -=delta;
     
-    fullTime = (1 - (gameSpeed*.001));
-    lineFullTime = (1 - (gameSpeed*.001));
+    fullTime = (1 - (gameSpeed *.001));
     
-
-    
-    
-    if (fullTime < .13){
-        fullTime = .13;
+    if (fullTime < .12){
+        fullTime = .12;
     }
     
-    if (lineFullTime < .13){
-        lineFullTime = .13;
-    }
     
-    if (gameSpeed > 900){
-        gameSpeed = 900;
+    if (gameSpeed > 400 * difficulty){
+        gameSpeed = 400 * difficulty;
     }
     
     if (timer <= 0){
@@ -645,25 +713,16 @@ void UpdateScene(){
         }
     }
     
-    if (lineTimer <= 0){
-        if (lineReset){
-            lineTimer  = lineFullTime;
-            lineReset= false;
-        }
-        if (lineTimer<=0){
-            lineReset = true;
-        }
-    }
-    
- 
-    
+
     if (resetTimer){
         
         testSquare = 0;
         testSquare = new Square();
-        testSquare->x = centerLane;
-        testSquare->y = 500;
-        testSquare->size = 30;
+        testSquare->sizex = 20;
+        testSquare->sizey = 40;
+        testSquare->y = WINDOWHEIGHT + (testSquare->sizey) + difficulty * 10;
+        testSquare->x = centerLane - testSquare->sizex/2;
+        testSquare->sections = 2;
         testSquare->unique = true;
         testSquare->R = 0.5;
         testSquare->G = 0.5;
@@ -674,21 +733,26 @@ void UpdateScene(){
         testSquare = 0;
         
         
-        int side = random()% 4;
-        int type = random()% 4;
+        int side = 0 + (int) (4.0 * (rand() / (RAND_MAX + 1.0)));
+        int type = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+        
+        int chain = 0 + (int) ((7.0 - difficulty) * (rand() / (RAND_MAX + 1.0)));
         
         //cout << "side " << side << endl;
         testSquare = new Square();
+        testSquare->sections = 2;
+        testSquare->sizex = 50;
+        testSquare->sizey = 100;
         
         if (side == 0){
-        testSquare->x = centerLane + 70 ;
+        testSquare->x = centerLane + 85 - testSquare->sizex/2 ;
         } else if (side ==1) {
-            testSquare->x = centerLane - 100 ;
+            testSquare->x = centerLane - 85 - testSquare->sizex/2 ;
         }
         
         switch (type){
                 
-            case 0:
+            case white:
                 testSquare->unique= true;
                 testSquare->R = 1;
                 testSquare->G = 1;
@@ -697,30 +761,83 @@ void UpdateScene(){
                 
                 break;
             
-            case 1:
+            case red:
                 testSquare->unique= true;
                 testSquare->R = 1.0;
                 testSquare->currentColor = red;
                 break;
-            case 2:
+                
+            case green:
                 testSquare->unique= true;
                 testSquare->G = 1.0;
                 testSquare->currentColor = green;
                 break;
                 
-            case 3:
+            case blue:
                 testSquare->unique= true;
                 testSquare->B = 1.0;
                 testSquare->currentColor = blue;
+                break;
+                
+            case purple:
+                testSquare->unique= true;
+                testSquare->B = 1.0;
+                testSquare->R = 1.0;
+                testSquare->currentColor = purple;
                 break;
                 
             default:
                 break;
         }
         
-        //int rVertical = random() % 10;
-        testSquare->y = 580 ;
-        testSquare->size = 50;
+        //override and place NEEDED chain block in
+        if (chain == 1){
+            cout << "Saved your soul" << endl;
+            testSquare->unique= true;
+
+            switch (currentColor) {
+                case white:
+                    testSquare->R = 1;
+                    testSquare->G = 1;
+                    testSquare->B = 1;
+                    testSquare->currentColor = white;
+                    break;
+                    
+                case red:
+                    testSquare->R = 1;
+                    testSquare->G = 0;
+                    testSquare->B = 0;
+                    testSquare->currentColor = red;
+                    break;
+                    
+                case green:
+                    testSquare->R = 0;
+                    testSquare->G = 1;
+                    testSquare->B = 0;
+                    testSquare->currentColor = green;
+                    break;
+                    
+                case blue:
+                    testSquare->R = 0;
+                    testSquare->G = 0;
+                    testSquare->B = 1;
+                    testSquare->currentColor = blue;
+                    break;
+                    
+                case purple:
+                    testSquare->R = 1;
+                    testSquare->G = 0;
+                    testSquare->B = 1;
+                    testSquare->currentColor = purple;
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+        }
+        
+        testSquare->y = WINDOWHEIGHT + testSquare->sizey ;
         testSquare->vy = -10;
         testSquare->active = true;
         
@@ -735,18 +852,28 @@ void UpdateScene(){
     }
     
     if (PRESS_SPACE){
+        if (!movingRight){
+            movingRight= true;
+            screechRight.play();
+        }
+        movingLeft = false;
         gameFlipped = true;
     } else {
+        if (!movingLeft){
+            screechLeft.play();
+            movingLeft = true;
+        }
         gameFlipped = false;
+        movingRight = false;
     }
     
     
     
     //switch sides when pressed
     if (gameFlipped){
-        player->x = centerLane - 85;
+        player->x = centerLane - 85 - player->sizex/2;
     } else {
-        player->x = centerLane  + 85;
+        player->x = centerLane  + 85 - player->sizex/2;
     }
     
     
@@ -754,12 +881,13 @@ void UpdateScene(){
         (*i)->Update(delta);
         
         if ((*i) != player){
-            (*i)->vy = - (.5 + gameSpeed*1);
+            (*i)->vy = - (gameSpeed*1);
         }
         
-        if ((*i)->y < 0 +(*i)->size){
+        if ((*i)->y < 0 + (*i)->sizey + 5){
             i = objects.erase(i);
             boop.play();
+            gameSpeed+=10;
            
         } else {
             i++;
@@ -790,7 +918,7 @@ void UpdateScene(){
     }
     
     if (PRESS_PLUS) {
-        player->y = 3;
+        combo++;
     }
     
     if (PRESS_MINUS){
@@ -808,22 +936,24 @@ void CheckCollisions(){
             //if player collides with object of same color then score goes up
             if (player->overlapping && test->currentColor == currentColor){
                 objects.erase(i);
-                angle -= cspeed * gameSpeed * 10 * delta;
-                gameSpeed += 50;
+                angle -= cspeed * gameSpeed * .1 * delta;
+                gameSpeed += 15 * difficulty;
+                //cr+=gameSpeed / 5;
                 combo++;
                 level+= 1 * combo;
+                powerTune.setVolume(50);
                 powerTune.play();
-                //powerTune.setPitch(10);
+
             }
             
             //if player collides with object of same color then score goes down
             if (player->overlapping && test->currentColor != currentColor){
                 level--;
-                gameSpeed-=100;
+                gameSpeed-=gameSpeed * .2;
                 
-                if (gameSpeed <= 100) {
-                    gameSpeed = 100;
-                }
+                cradius = 0;
+                cr = 1;
+
                 
                 if (level< 1){
                     level = 1;

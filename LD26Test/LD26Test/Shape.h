@@ -45,6 +45,7 @@ public:
     float R,G,B;
     float fR,fG,fB;
     
+    int sections;
     int currentColor;
     
     bool unique;
