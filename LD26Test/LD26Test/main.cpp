@@ -7,10 +7,12 @@ LD 26 Minimalism
  */
 
 #include <iostream>
+#include <string>
 #include <cmath>
 #include <OpenGL/OpenGL.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundSource.hpp>
+#include <SFML/Graphics.hpp>
 #include <GLUT/GLUT.h>
 #include <vector>
 #include <cstdlib>
@@ -22,24 +24,36 @@ using namespace std;
 
 
 enum GameState{intro,splashludum,splashlogo,title,levelselect,game,win,lose,quit};
+
 GameState gameState = game;
 bool gameFlipped = false;
 int level = 1;
-int difficulty = 4;
-int gameSpeed = difficulty * 150;
+int difficulty = 3;
+int gameSpeed;
+float speedFactor;
 
 unsigned int combo;
 unsigned int maxCombo;
+bool comboBroken;
+
+//Konami Code
+int kup,kdown,kleft,kright;
 
 bool movingRight;
 bool movingLeft = true;
 
-int sections = 5 * difficulty;
+bool pauseGame = false;
+
+int sections = 5;
 
 enum colors {white,red,green,blue,purple};
 int selectColor;
 
+bool deflateTimer = false;
+float deflateSpeed = 100;
+float deflateAmount;
 
+float finalCR;
 
 colors currentColor = white;
 
@@ -49,9 +63,17 @@ float fullTime = 1;
 bool resetTimer;
 float timer;
 
-float lineFullTime = 1;
-bool lineReset;
-float lineTimer;
+float bonusFullTime = 1;
+bool bonusActive= false;
+bool killBonus;
+float bonusTimer;
+
+bool resetLevel = true;
+
+float colorChangeTimerFull = .09;
+float colorChangeTimer = colorChangeTimerFull;
+
+float bonusR,bonusG,bonusB;
 
 float VIEW_HEIGHT = 20.0f;  //Height Ratio Lock
 float VIEW_WIDTH  = 0.0f;   //Width Ratio Calculated later
@@ -71,6 +93,25 @@ sf::Music boop;
 sf::Music highBeep;
 sf::Music screechRight;
 sf::Music screechLeft;
+sf::Music psychedelic;
+sf::Music bummer;
+sf::Music wimp;
+sf::Music trafficjam;
+sf::Music combobreaker;
+
+sf::Music  easy;
+sf::Music  normal;
+sf::Music  hard;
+sf::Music  insanity;
+sf::Music  potato;
+
+sf::Music comboSound[25];
+
+
+bool newCombo = false;
+bool brokeCombo= false;
+
+sf::Image ludumIntro;
 
 bool LEFT_MOUSE_DOWN;
 bool HELD_MOUSE;
@@ -105,6 +146,8 @@ void Display();
 void Init();
 void Reshape(int w, int h);
 void OnKeyPress(unsigned char key, int x , int y);
+void SpecialKey(int key, int x ,int y);
+void SpecialKeyUp(int key, int x, int y);
 void OnKeyUp(unsigned char key, int x, int y);
 void OnMouseClick(int button, int state, int x, int y);
 void CheckCollisions();
@@ -121,13 +164,16 @@ int main(int argc, char** argv){
     std::cout << "Initializing GLUT...\n";
     cx      =   100;
     cy      =   WINDOWHEIGHT/2;
-    cr      =   500;
+    cr      =   0;
     cspeed  =   .0025f;
     angle   =   0.0f; // "North"
     
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    glutInitWindowPosition(400, 400);
+    
+    glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-WINDOWWIDTH)/2,
+                           (glutGet(GLUT_SCREEN_HEIGHT)-WINDOWHEIGHT)/2);
+    
     glutInitWindowSize(WINDOWWIDTH, WINDOWHEIGHT);
     glutCreateWindow("LD26 Minimalism");
 
@@ -136,6 +182,8 @@ int main(int argc, char** argv){
 
     glutReshapeFunc(Reshape);//Set resize function
     glutKeyboardFunc(OnKeyPress);
+    glutSpecialFunc(SpecialKey);
+    glutSpecialUpFunc(SpecialKeyUp);
     glutKeyboardUpFunc(OnKeyUp);
     glutMouseFunc(OnMouseClick);
     glutIdleFunc(GameLoop);
@@ -147,16 +195,17 @@ int main(int argc, char** argv){
         glutFullScreen();
     }
     
-    if (!powerTune.openFromFile("powerUp.ogg")) {
+    if (!powerTune.openFromFile("powerup.ogg")) {
         cout << "Error loading song..." << endl;
     }
 
 
-    if (!music.openFromFile("jam.ogg")) {
+    if (!music.openFromFile("game.ogg")) {
         cout << "Error loading song..." << endl;
     }
     
     music.setLoop(true);
+    music.setVolume(45);
     
     if (!beep.openFromFile("beep.ogg")) {
         cout << "Error loading song..." << endl;
@@ -184,6 +233,130 @@ int main(int argc, char** argv){
         cout << "Error loading song..." << endl;
     }
     
+    
+    if (!easy.openFromFile("easy.ogg")){
+        cout << "Error loading sound..." << endl;
+    }
+    if (!normal.openFromFile("normal.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    if (!hard.openFromFile("hard.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    if (!insanity.openFromFile("insanity.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    if (!potato.openFromFile("potato.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    
+    
+    if (!psychedelic.openFromFile("psychedelic.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    
+    if (!bummer.openFromFile("bummer.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    
+    if (!combobreaker.openFromFile("combobreaker.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    
+    
+    if (!trafficjam.openFromFile("trafficjam.ogg")){
+        cout << "Error loading sound..."<< endl;
+    }
+    
+    
+    
+
+    
+    
+    if (!comboSound[1].openFromFile("combo1.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    if (!comboSound[2].openFromFile("combo2.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    if (!comboSound[3].openFromFile("combo3.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[4].openFromFile("combo4.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[5].openFromFile("combo5.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[6].openFromFile("combo6.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[7].openFromFile("combo7.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[8].openFromFile("combo8.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[9].openFromFile("combo9.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[10].openFromFile("combo10.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[11].openFromFile("combo11.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[12].openFromFile("combo12.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[13].openFromFile("combo13.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[14].openFromFile("combo14.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[15].openFromFile("combo15.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[16].openFromFile("combo16.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[17].openFromFile("combo17.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[18].openFromFile("combo18.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    if (!comboSound[19].openFromFile("combo19.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    if (!comboSound[20].openFromFile("combo20.ogg")){
+        cout << "Error loading combo sound..." << endl;
+    }
+    
+    
+    
+    if (!ludumIntro.loadFromFile("ludumintro.png")){
+        cout << "Error loading image..." << endl;
+    }
+    
+
     music.play();
     
     Init();
@@ -196,8 +369,8 @@ void Init(){
     player = new Square();
     player->sections = 4;
     player->x = WINDOWWIDTH/2;
-    player->sizex = 40;
-    player->sizey = 80;
+    player->sizex = 50;
+    player->sizey = 100;
     player->y = player->sizey + 10;
     player->active = true;
     player->unique = true;
@@ -218,8 +391,6 @@ void Init(){
     }
 
     selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
-    
-    
     currentColor = (colors)selectColor;
     
 }
@@ -227,10 +398,25 @@ void Init(){
 
 void GameLoop(){
     //Calculate time before draw
-    CalculateDrawTime();
+    
+    if(!pauseGame){
+        CalculateDrawTime();
+    }else{
+        delta = 0;
+        timeOfLastDraw = 0;
+    }
     
     if (PRESS_ESCAPE){
         glutDestroyWindow(1);
+        powerDown.stop();
+        powerTune.stop();
+        boop.stop();
+        highBeep.stop();
+        screechLeft.stop();
+        screechRight.stop();
+        beep.stop();
+        
+        
         exit(0);
     }
     
@@ -244,6 +430,7 @@ void GameLoop(){
             break;
             
         case splashludum:
+            
             break;
             
         case splashlogo:
@@ -271,28 +458,17 @@ void GameLoop(){
            // cout << "GAME STATE LOOP" << endl;
             break;
     }
-    
-    //cout << "Direction :" << player->direction << endl;
-//    cout << "-----------------------------------" << endl;
-//    cout << "Overlap " << player->overlapping << endl;
-//    cout << "Enter " << player->entering << endl;
-//    cout << "Exit " << player->exiting << endl;
-//    cout << "Inside " << player->inside << endl;
-//    cout << "Outside " << player->outside << endl;
-//    cout << "In Coll " << player->internalCollision << endl;
-//    cout << "Mouse " << LEFT_MOUSE_DOWN << endl;
-//    cout << "HOLD M " << HELD_MOUSE << endl;
-//    cout << "PRESS M " << PRESS_MOUSE << endl;
-//cout << "X " << player->x << " y " << player->y << endl
-    //cout << "timer " << timer << endl;
-    //cout << "reset timer " << resetTimer << endl;
-  // cout << "angle :"  << angle << endl;
-    
+
 
     glutPostRedisplay();
     
     //Calculate time after draw
-    GetCurrentTime();
+    if (!pauseGame){
+        GetCurrentTime();
+    } else{
+        delta = 0;
+        timeOfLastDraw = 0;
+    }
 }
 
 void CalculateDrawTime() {
@@ -335,12 +511,7 @@ void DrawTimer(){
 }
 
 void Display(){
-    
-    if (gameFlipped) {
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    } else {
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    }
+
     glClear(GL_COLOR_BUFFER_BIT);
 
     DrawTimer();
@@ -351,34 +522,78 @@ void Display(){
 
     player->Draw();
    
-    
-    
     if (combo > maxCombo){
         maxCombo = combo;
+        if (!comboBroken && maxCombo >2 ){
+            combobreaker.play();
+        }
+        comboBroken = true;
     }
     
     //Draw text
     char string[120];
     char * buffer;
-    
-    glColor3f(1.0, 1.0, 1.0);
 
+    cout << "cr " << cr << endl;
+    //if circle encompasses screen change text to black
+    if (cr >= 690){
+        glColor3f(0.0, 0.0, 0.0);
+    } else {
+        glColor3f(1.0, 1.0, 1.0);
+    }
     
     if (combo > 0){
         sprintf(string,"%d", combo);
         buffer = string;
-        glRasterPos2f(WINDOWWIDTH/2 - 2, WINDOWHEIGHT/2 - 12);
+        int stringLength = 0;
+        
         for (int i = 0; i < strlen(buffer); i ++){
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
+            stringLength += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, buffer[i]);
+        }
+        
+        glRasterPos2f(WINDOWWIDTH/2 - stringLength/2, WINDOWHEIGHT/2 - 7);
+        for (int i = 0; i < strlen(buffer); i ++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
         }
     }
     
     
-    sprintf(string,"-Traffic Jam-");
+    switch (difficulty) {
+        case 1:
+            sprintf(string,"Potato Mode");
+            break;
+            
+        case 2:
+            sprintf(string,"Easy Mode Max Combo %d" , maxCombo);
+            break;
+            
+        case 3:
+            sprintf(string,"Normal Mode Max Combo %d" , maxCombo);
+            break;
+            
+        case 4:
+            sprintf(string,"Hard Mode Max Combo %d" , maxCombo);
+            break;
+            
+        case 5:
+            sprintf(string,"Insanity Mode Max Combo %d" , maxCombo);
+            break;
+            
+        default:
+            break;
+    }
+    
     buffer = string;
-    glRasterPos2f(15, 10);
+    
+    int stringLength = 0;
+    
     for (int i = 0; i < strlen(buffer); i ++){
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,buffer[i]);
+        stringLength += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, buffer[i]);
+    }
+    
+    glRasterPos2f((WINDOWWIDTH/2) - stringLength / 2, WINDOWHEIGHT - 20);
+    for (int i = 0; i < strlen(buffer); i ++){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
     }
 
     
@@ -404,27 +619,7 @@ void OnKeyPress(unsigned char key , int x, int y){
     //std::cout << "Key: " << key << "\n";
     switch(key){
         case 'w':
-            PRESS_UP = true;
-            break;
-            
-        case 'a':
-            PRESS_LEFT = true;
-            break;
-            
-        case 's':
-            PRESS_DOWN  = true;
-            break;
-            
-        case 'd':
-            PRESS_RIGHT = true;
-            break;
-            
-        case '=':
-            PRESS_PLUS  = true;
-            break;
-            
-        case '-':
-            PRESS_MINUS = true;
+            delta = 0;
             break;
             
         case 32:
@@ -435,6 +630,67 @@ void OnKeyPress(unsigned char key , int x, int y){
             PRESS_ESCAPE = true;
             break;
             
+        case 'p':
+            combo++;
+            break;
+            
+            
+        case '0':
+            difficulty = 1;
+            resetLevel = true;
+            maxCombo = 0;
+            gameSpeed = difficulty * 100;
+            angle = -4.7;
+            if (potato.getStatus() == 0 ){
+                potato.play();
+            }
+            break;
+            
+        case '1':
+            difficulty = 2;
+            maxCombo = 0;
+            resetLevel = true;
+            gameSpeed = difficulty * 100;
+            angle = -4.7;
+            if (easy.getStatus() == 0 ){
+                easy.play();
+            }
+            break;
+            
+        case '2':
+            difficulty = 3;
+            maxCombo = 0;
+            resetLevel = true;
+            gameSpeed = difficulty * 100;
+            angle = -4.7;
+            if (normal.getStatus() == 0 ){
+                normal.play();
+            }
+            break;
+            
+        case '3':
+            difficulty = 4;
+            maxCombo = 0;
+            resetLevel = true;
+            gameSpeed = difficulty * 100;
+            angle = -4.7;
+            if (hard.getStatus() == 0 ){
+                hard.play();
+            }
+            break;
+            
+        case '4':
+            difficulty = 5;
+            maxCombo = 0;
+            resetLevel = true;
+            gameSpeed = difficulty * 100;
+            angle = -4.7;
+            if (insanity.getStatus() == 0 ){
+                insanity.play();
+            }
+            break;
+            
+        
     }
 }
 
@@ -442,31 +698,92 @@ void OnKeyUp(unsigned char key, int x, int y){
     //std::cout << "Released Key: " << key << "\n";
     switch (key){
         case 'w':
-            PRESS_UP = false;
-            break;
-            
-        case 'a':
-            PRESS_LEFT = false;
-            break;
-            
-        case 's':
-            PRESS_DOWN  = false;
-            break;
-            
-        case 'd':
-            PRESS_RIGHT = false;
-            break;
-            
-        case '=':
-            PRESS_PLUS  = false;
-            break;
-            
-        case '-':
-            PRESS_MINUS = false;
+
             break;
             
         case 32:
             PRESS_SPACE = false;
+            break;
+    }
+}
+
+
+void SpecialKey(int key, int x , int y){
+    switch (key){
+            //up
+        case 101:
+            if (!PRESS_UP){
+                kup++;
+            }
+            
+            if (kup > 2){
+                kup = kdown = kleft = kright = 0;
+            }
+            PRESS_UP = true;
+            
+            break;
+            
+            //down
+        case 103:
+            if (!PRESS_DOWN){
+                kdown++;
+            }
+            
+            if (kdown > 2){
+                kup = kdown = kleft = kright = 0;
+            }
+                PRESS_DOWN = true;
+            break;
+            
+            //left
+        case 100:
+            if (!PRESS_LEFT){
+                kleft++;
+            }
+            if (kleft > 2){
+                kup = kdown = kleft = kright = 0;
+            }
+            PRESS_LEFT = true;
+            break;
+            
+            //right
+        case 102:
+            if (!PRESS_RIGHT){
+                kright++;
+            }
+            if (kright > 2){
+                kup = kdown = kleft = kright = 0;
+            }
+            PRESS_RIGHT = true;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+void SpecialKeyUp(int key , int x ,int y ){
+    switch (key)   {
+            
+        case 101:
+            PRESS_UP = false;
+            break;
+            
+        case 103:
+            PRESS_DOWN = false;
+            break;
+            
+        case 100:
+            PRESS_LEFT = false;
+            break;
+            
+        case 102:
+
+            PRESS_RIGHT = false;
+            break;
+            
+        default:
             break;
     }
 }
@@ -540,7 +857,213 @@ void DrawDisk(float cx, float cy, float r, float R, float G, float B){
 
 
 
-void UpdateScene(){
+void UpdateScene(){    
+    powerDown.setPitch(.2 +gameSpeed * .001);
+    powerTune.setPitch(.2 +gameSpeed * .001);
+    music.setPitch(.999 + finalCR * .00001);
+    
+    
+    if (combo == 5){
+        if (newCombo == false){
+        comboSound[1].setVolume(100);
+        comboSound[1].play();
+        }
+        newCombo = true;
+    }
+    
+    if (combo == 10){
+        if (newCombo == false){
+            comboSound[2].setVolume(100);
+            comboSound[2].play();
+        }
+        newCombo = true;
+    }
+    
+    
+    if (combo == 15){
+        if (newCombo == false){
+
+            comboSound[3].setVolume(200);
+            comboSound[3].play();
+        }
+        newCombo = true;
+    }
+    
+
+    if (combo == 20){
+        if (newCombo == false){
+
+            comboSound[4].setVolume(200);
+            comboSound[4].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 26){
+        if (newCombo == false){
+            comboSound[5].setVolume(200);
+            comboSound[5].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 30){
+        if (newCombo == false){
+            comboSound[6].setVolume(200);
+            comboSound[6].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 35){
+        if (newCombo == false){
+
+            comboSound[7].setVolume(200);
+            comboSound[7].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 40){
+        if (newCombo == false){
+
+            comboSound[8].setVolume(200);
+            comboSound[8].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 45){
+        if (newCombo == false){
+
+            comboSound[9].setVolume(200);
+            comboSound[9].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 50){
+        if (newCombo == false){
+
+            comboSound[10].setVolume(200);
+            comboSound[10].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 55){
+        if (newCombo == false){
+
+            comboSound[11].setVolume(200);
+            comboSound[11].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 60){
+        if (newCombo == false){
+
+            comboSound[12].setVolume(200);
+            comboSound[12].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 65){
+        if (newCombo == false){
+
+            comboSound[13].setVolume(200);
+            comboSound[13].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 70){
+        if (newCombo == false){
+
+            comboSound[14].setVolume(200);
+            comboSound[14].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 75){
+        if (newCombo == false){
+
+            comboSound[15].setVolume(200);
+            comboSound[15].play();
+        }
+        newCombo = true;
+    }
+    if (combo == 80){
+        if (newCombo == false){
+
+            comboSound[16].setVolume(200);
+            comboSound[16].play();
+        }
+        newCombo = true;
+    }
+
+    if (combo == 85){
+        if (newCombo == false){
+            
+            comboSound[17].setVolume(200);
+            comboSound[17].play();
+        }
+        newCombo = true;
+    }
+    
+    if (combo == 90){
+        if (newCombo == false){
+            
+            comboSound[18].setVolume(200);
+            comboSound[18].play();
+        }
+        newCombo = true;
+    }
+    
+    if (combo == 95){
+        if (newCombo == false){
+            
+            comboSound[19].setVolume(200);
+            comboSound[19].play();
+        }
+        newCombo = true;
+    }
+    
+    if (combo >= 100 && combo % 5 == 0){
+        if (newCombo == false){
+            
+            comboSound[20].setVolume(200);
+            comboSound[20].play();
+        }
+        newCombo = true;
+    }
+    
+    
+    if (resetLevel) {
+        combo = 0;
+        angle = 1.6;
+        bonusActive = false;
+        kup = 4;
+        comboBroken = false;
+        highBeep.play();
+        speedFactor = .5;
+        gameSpeed = 0;
+        for (int i = 0 ; i < difficulty ; i++){
+            speedFactor+=speedFactor;
+        }
+        
+        gameSpeed =  speedFactor * 50;
+        
+        selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+        if (difficulty !=1){
+            while (selectColor == currentColor){
+                selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
+            }
+        }
+        currentColor = (colors)selectColor;
+        
+        for (auto i = objects.begin() ; i != objects.end();){
+            Shape* test = *i;
+            if (test != player && test->isObstacle){
+               i = objects.erase(i);
+            } else {
+                i++;
+            }
+        }
+        resetLevel = false;
+    }
+    
     if (gameSpeed <= 200) {
         gameSpeed = 200;
     }
@@ -548,40 +1071,37 @@ void UpdateScene(){
     cx = WINDOWWIDTH/2;
     //check if radius is too small
     
-    if (cradius < -gameSpeed){
-        cradius = -gameSpeed;
+    if (deflateTimer){
+        deflateSpeed = 1000;
+    } else {
+        deflateSpeed = 100;
     }
 
-    cr =  cradius + (200 * combo + 2 );
+
+    finalCR =  (difficulty * 2) * gameSpeed * .1 + (10 * (combo+1));
+    
+    if (cr < finalCR) {
+        cr+= deflateSpeed * delta;
+    }
+    
+    if (cr > finalCR){
+        cr-= deflateSpeed * delta;
+    }
     
     if (cr > 12000){
         cr = 12000;
     }
     
-//    if (cr <= cradius){
-//        cr = 0;
-//        cradius = 0;
-//    }
-    
-    //cout << " Cr "  << cr << " Cradius " << cradius << endl;
-    
-    if (cr < 100){
-        cr = 100;
-    }
     
 
     
-    
-//    if (cradius < 1){
-//        cradius = 1;
-//    }
-    
+    //Set Window Title To max combo
     char title[1024];
-    sprintf(title, "Max Combo - %d" , maxCombo);
+    sprintf(title, "Traffic Jam");
     
     glutSetWindowTitle(title);
 
-    
+    //Set player and timer to correct color 
     switch (currentColor) {
         case white:
             player->R = 1.0f;
@@ -639,50 +1159,73 @@ void UpdateScene(){
             
             break;
             
-            
         default:
             break;
     }
-    
-    cradius-= delta * gameSpeed * .15;
+
+    //Change size and angle of timer per game speed
+    cradius-= delta * 100;
+
+
     angle -= cspeed * gameSpeed * .8 * delta;
     fmod(angle, 360.0f);
-   // cout << angle << endl;
+
     
     if (angle < -4.7){
         angle = 1.6;
         
+        if (bonusTimer < 0 && bonusActive){
+            killBonus = true;
+        } else {
+            killBonus = false;
+        }
+        
+
+        //kill bonus when timer finishes
+        if (bonusTimer <= 0 && killBonus){
+            if (bonusActive){
+                for (auto i = objects.begin() ; i != objects.end();){
+                    Shape* test = *i;
+                    if (test != player){
+                       i = objects.erase(i);
+                    } else {
+                        i++;
+                    }
+                }
+                gameSpeed *= .9;
+            }
+            
+            bonusActive = false;
+        }
+        
         
         //highBeep.setPitch(2);
-        highBeep.setVolume(50);
+        highBeep.setVolume(55);
         highBeep.play();
         
+        cout << "random" << endl;
         selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
-           
+        
+        if (difficulty !=1){
             while (selectColor == currentColor){
                  selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
             }
+        }
         currentColor = (colors)selectColor;
         
-        gameSpeed-= gameSpeed * .25;
+        gameSpeed-= gameSpeed * .15;
         
         cradius -= 10;
         //cradius = 0;
-
-
     }
     
     
-//    if (angle <= -3 && angle >= -4 ){
-//        if (beep.getStatus() == 0){
-//            beep.play();
-//        }
-//    }
+
     
-    if (angle < -0.5){
+    if (angle < -.5){
         beep.setPitch(abs(angle));
-        beep.setVolume(abs(angle)*10);
-        
+        beep.setVolume(5 + abs(angle)*10);
+
         if (beep.getStatus() == 0){
             beep.play();
         }
@@ -690,17 +1233,31 @@ void UpdateScene(){
     
     
     timer-=delta;
-    lineTimer -=delta;
+    bonusTimer-=delta;
+    colorChangeTimer-=delta;
     
-    fullTime = (1 - (gameSpeed *.001));
+    fullTime = (1 - (gameSpeed *.0007));
     
-    if (fullTime < .12){
-        fullTime = .12;
+    
+    if (colorChangeTimer < 0){
+        colorChangeTimer = colorChangeTimerFull;
+        
+        bonusR =  (1 + (int) ((100.0 - difficulty) * (rand() / (RAND_MAX + 1.0)))) * .01;
+        bonusG =  (1 + (int) ((100.0 - difficulty) * (rand() / (RAND_MAX + 1.0))))* .01;
+        bonusB =  (1 + (int) ((100.0 - difficulty) * (rand() / (RAND_MAX + 1.0))))* .01;
+        
     }
     
     
-    if (gameSpeed > 400 * difficulty){
-        gameSpeed = 400 * difficulty;
+    //Timer speed
+    if (fullTime < .15){
+        fullTime = .15;
+    }
+    
+    
+    
+    if (gameSpeed > 100 + 250 * difficulty){
+        gameSpeed = 100 + 250 * difficulty;
     }
     
     if (timer <= 0){
@@ -713,16 +1270,23 @@ void UpdateScene(){
         }
     }
     
+    //cout << "bonus active " << bonusActive << endl;
+    if (bonusTimer>0){
+        bonusActive = true;
+    }
 
+    
     if (resetTimer){
         
+        //Create center lane square
         testSquare = 0;
         testSquare = new Square();
+        testSquare->isObstacle = true;
         testSquare->sizex = 20;
         testSquare->sizey = 40;
         testSquare->y = WINDOWHEIGHT + (testSquare->sizey) + difficulty * 10;
         testSquare->x = centerLane - testSquare->sizex/2;
-        testSquare->sections = 2;
+        testSquare->sections = 1;
         testSquare->unique = true;
         testSquare->R = 0.5;
         testSquare->G = 0.5;
@@ -732,17 +1296,28 @@ void UpdateScene(){
         objects.push_back(testSquare);
         testSquare = 0;
         
-        
-        int side = 0 + (int) (4.0 * (rand() / (RAND_MAX + 1.0)));
+        //start creation of random squares
+        int side = 0 + (int) (3.0 * (rand() / (RAND_MAX + 1.0)));
         int type = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
         
-        int chain = 0 + (int) ((7.0 - difficulty) * (rand() / (RAND_MAX + 1.0)));
+        int chain = 0 + (int) ((9.0 - difficulty) * (rand() / (RAND_MAX + 1.0)));
         
-        //cout << "side " << side << endl;
+        int bonus =  0 + (int) (difficulty * 10 * (rand() / (RAND_MAX + 1.0)));
+        
+        if (kup == 2 && kdown == 2 && kright ==2 && kleft ==2){
+            bonus = 1 ;
+            bonusActive = true;
+        };
+        
         testSquare = new Square();
-        testSquare->sections = 2;
+        testSquare->sections = 1;
         testSquare->sizex = 50;
         testSquare->sizey = 100;
+        testSquare->isObstacle = true;
+        
+        if (bonus == 1 && !bonusActive){
+            testSquare->isBonus = true;
+        }
         
         if (side == 0){
         testSquare->x = centerLane + 85 - testSquare->sizex/2 ;
@@ -791,8 +1366,7 @@ void UpdateScene(){
         }
         
         //override and place NEEDED chain block in
-        if (chain == 1){
-            cout << "Saved your soul" << endl;
+        if (chain <= 1){
             testSquare->unique= true;
 
             switch (currentColor) {
@@ -851,15 +1425,19 @@ void UpdateScene(){
         
     }
     
+    //if you press space , switch sides1
+    
     if (PRESS_SPACE){
         if (!movingRight){
             movingRight= true;
+            screechRight.setVolume(20);
             screechRight.play();
         }
         movingLeft = false;
         gameFlipped = true;
     } else {
         if (!movingLeft){
+            screechLeft.setVolume(20);
             screechLeft.play();
             movingLeft = true;
         }
@@ -876,18 +1454,27 @@ void UpdateScene(){
         player->x = centerLane  + 85 - player->sizex/2;
     }
     
-    
+    //update all objects
     for (auto i = objects.begin() ; i != objects.end() ;){
         (*i)->Update(delta);
         
+        if ((*i)->isBonus){
+            (*i)->R = bonusR;
+            (*i)->G = bonusG;
+            (*i)->B = bonusB;
+        }
+        
+        //set every objects speed to game speed
         if ((*i) != player){
             (*i)->vy = - (gameSpeed*1);
         }
         
+        //if object passes bottom, remove it
         if ((*i)->y < 0 + (*i)->sizey + 5){
             i = objects.erase(i);
+            boop.setVolume(15);
             boop.play();
-            gameSpeed+=10;
+            gameSpeed += 5 * difficulty;
            
         } else {
             i++;
@@ -895,35 +1482,25 @@ void UpdateScene(){
     
     }
     
-    
-    if (PRESS_UP){
-        gameSpeed++;
-    }
-    if (PRESS_DOWN){
-        cy -= cspeed;
-    }
-    if (PRESS_LEFT){
-        cx -= cspeed;
-    }
-    if (PRESS_RIGHT){
-        cx += cspeed;
-    }
-    
-    if (LEFT_MOUSE_DOWN){
-        delta = 0;
-    }
-    
-    if(RIGHT_MOUSE_DOWN){
-        gameFlipped = true;
-    }
-    
-    if (PRESS_PLUS) {
-        combo++;
-    }
-    
-    if (PRESS_MINUS){
 
+
+    
+    //when bonus active change colors
+    if (bonusActive){
+        for (auto i = objects.begin() ; i!= objects.end(); i ++){
+            Shape* test = *i;
+            test->R = bonusR;
+            test->G = bonusG;
+            test->B = bonusB;
+            test->currentColor = currentColor;
+        }
+        
+        timerR = bonusR;
+        timerG = bonusG;
+        timerB = bonusB;
+        
     }
+    
 }
 
 
@@ -933,6 +1510,27 @@ void CheckCollisions(){
         if (test != player) {
             player->Collide((*test));
             
+            if (player->overlapping){
+                if (test->isBonus){
+                    bonusTimer = bonusFullTime;
+
+                    psychedelic.setVolume(400);
+                    psychedelic.play();
+                    
+                    angle = 1.6;
+                    objects.erase(i);
+                    angle -= cspeed * gameSpeed * .1 * delta;
+                    gameSpeed += 15 * difficulty;
+                    //cr+=gameSpeed / 5;
+                    combo++;
+                    newCombo = false;
+                    level+= 1 * combo;
+                    powerTune.setVolume(20);
+                    powerTune.play();
+                    break;
+                }
+            }
+            
             //if player collides with object of same color then score goes up
             if (player->overlapping && test->currentColor == currentColor){
                 objects.erase(i);
@@ -940,8 +1538,9 @@ void CheckCollisions(){
                 gameSpeed += 15 * difficulty;
                 //cr+=gameSpeed / 5;
                 combo++;
+                newCombo = false;
                 level+= 1 * combo;
-                powerTune.setVolume(50);
+                powerTune.setVolume(20);
                 powerTune.play();
 
             }
@@ -949,20 +1548,22 @@ void CheckCollisions(){
             //if player collides with object of same color then score goes down
             if (player->overlapping && test->currentColor != currentColor){
                 level--;
-                gameSpeed-=gameSpeed * .2;
+                gameSpeed-=gameSpeed * .20;
                 
                 cradius = 0;
                 cr = 1;
 
-                
                 if (level< 1){
                     level = 1;
                 }
                 objects.erase(i);
+                resetLevel = true;
                 combo = 0;
+                bummer.setVolume(200);
+                bummer.play();
+                powerDown.setVolume(20);
                 powerDown.play();
                 
-    
             }
         }
     }

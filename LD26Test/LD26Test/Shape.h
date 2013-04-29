@@ -51,8 +51,10 @@ public:
     bool unique;
     bool active;
     bool isGoal;
+    bool isBonus;
     bool isBad;
     bool isGood;
+    bool isObstacle;
     bool isTeleport;
     
     

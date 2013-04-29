@@ -13,21 +13,7 @@ using namespace std;
 
 
 void Square::Draw(){
-    glLineWidth(.5);
     glBegin(GL_QUADS);
-    
-    if (active){
-        glColor3f(1.0, 1.0, 1.0);
-    } else {
-        glColor3f(.2, .2, .2);
-    }
-    
-    if (unique){
-        glColor3f(R, G, B);
-    }
-    
-    
-    //for (int i = sections ; i > 1 ; i--){
     
     glColor3f(R, G, B);
     
@@ -39,7 +25,7 @@ void Square::Draw(){
     glEnd();
     
     
-    glLineWidth(4);
+    glLineWidth(5);
     glBegin(GL_LINES);
 
     glColor3f(R/2, G/2, B/2 );
@@ -62,13 +48,7 @@ void Square::Draw(){
     
     glEnd();
     
-    if (flipped){
-        glColor3f(1, 1, 1);
-    } else {
-        glColor3f(0, 0, 0);
-    }
-    
-    
+
 }
 
 
@@ -103,11 +83,6 @@ void Circle::Update(float delta){
 void Square::Update(float delta){
     x+=vx * delta;
     y+=vy * delta;
-    
-    if (x > 0){direction = dright;}
-    if (x < 0){direction = dleft;}
-    if (y > 0){direction = dup;}
-    if (y < 0){direction = ddown;}
 }
 
 
@@ -120,14 +95,6 @@ bool Square::Collide(Shape &rhs){
     bool didCollide = false;
     outside = true;
     
-    if (entering && outside){
-        entering = false;
-    }
-    
-    if (inside && entering){
-        exiting = true;
-    }
-        
 
         //check if overlapping
         if (x + sizex >= rhs.x  &&
@@ -140,49 +107,7 @@ bool Square::Collide(Shape &rhs){
             overlapping = false;
         }
     
-    
-    //check for entering /exiting
-    if (overlapping && outside){
-        if (entering){
-            exiting = true;
-        }
-        entering = true;
-    }
-    
-    //check for internal collision
-    if (inside){
-        entering = false;
-        
-        if (y >= rhs.y||
-            y - sizey <= rhs.y - rhs.sizey ||
-            x <= rhs.x ||
-            x+sizex >= rhs.x){
-            internalCollision = true;
-        }
-    } else {
-        internalCollision = false;
-    }
-    
 
-    
-    //check if inside other object
-    if (x + sizex < rhs.x + rhs.sizex  &&
-        x > rhs.x &&
-        y - sizey > rhs.y - rhs.sizey &&
-        y < rhs.y){
-        //cout << "inside" << endl;
-        inside = true;
-        outside = false;
-        
-    } else {
-        //cout << "outside" << endl;
-        
-        inside = false;
-    }
-
-
-    
-    
     return didCollide;
 }
 

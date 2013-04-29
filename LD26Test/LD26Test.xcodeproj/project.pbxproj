@@ -15,18 +15,52 @@
 		4E0BA2F4172B8A3400BB865E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E0BA2F2172B8A3400BB865E /* InfoPlist.strings */; };
 		4E0BA2FF172B8F7D00BB865E /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA2FE172B8F7D00BB865E /* GLUT.framework */; };
 		4E0BA301172B8F8400BB865E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E0BA300172B8F8400BB865E /* OpenGL.framework */; };
-		4E0D9498172CD1A90027F78D /* beep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D9497172CD1A90027F78D /* beep.ogg */; };
-		4E0D949A172CD3960027F78D /* powerdown.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D9499172CD3960027F78D /* powerdown.ogg */; };
-		4E0D949C172CD4540027F78D /* powerup.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D949B172CD4540027F78D /* powerup.ogg */; };
-		4E0D949E172CD4BD0027F78D /* boop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D949D172CD4BD0027F78D /* boop.ogg */; };
-		4E0D94A4172CE2300027F78D /* highbeep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D94A3172CE2300027F78D /* highbeep.ogg */; };
-		4E0D94A8172CEF7A0027F78D /* jam.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E0D94A7172CEF7A0027F78D /* jam.ogg */; };
 		4E2481AF172C29D900F9ADFE /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4E2481AD172C29D900F9ADFE /* Shape.cpp */; };
-		4E53D76F172DC053007AA621 /* screechleft.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D76D172DC053007AA621 /* screechleft.ogg */; };
-		4E53D770172DC053007AA621 /* screechright.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D76E172DC053007AA621 /* screechright.ogg */; };
 		4E53D772172DFA03007AA621 /* icon1.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D771172DFA03007AA621 /* icon1.icns */; };
+		4E53D774172E08AA007AA621 /* traffic-jamicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D773172E08AA007AA621 /* traffic-jamicon.icns */; };
+		4E53D776172E0E1B007AA621 /* ludumintro.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E53D775172E0E1B007AA621 /* ludumintro.png */; };
+		4E53D778172E0E9A007AA621 /* sfml-graphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E53D777172E0E9A007AA621 /* sfml-graphics.framework */; };
+		4E6655DA172EF50A0057ADDC /* trafficjam.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E6655D9172EF50A0057ADDC /* trafficjam.ogg */; };
+		4E6655DE172EF5320057ADDC /* combobreaker.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E6655DD172EF5320057ADDC /* combobreaker.ogg */; };
+		4E6655E2172EF54B0057ADDC /* wimp.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E6655E1172EF54B0057ADDC /* wimp.ogg */; };
+		4E6655E4172EF5E00057ADDC /* potato.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E6655E3172EF5E00057ADDC /* potato.ogg */; };
+		4E870ACE172EDF37007A478B /* boop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AC7172EDF37007A478B /* boop.ogg */; };
+		4E870ACF172EDF37007A478B /* highbeep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AC8172EDF37007A478B /* highbeep.ogg */; };
+		4E870AD0172EDF37007A478B /* powerdown.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AC9172EDF37007A478B /* powerdown.ogg */; };
+		4E870AD1172EDF37007A478B /* powerup.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870ACA172EDF37007A478B /* powerup.ogg */; };
+		4E870AD2172EDF37007A478B /* screechleft.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870ACB172EDF37007A478B /* screechleft.ogg */; };
+		4E870AD3172EDF37007A478B /* screechright.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870ACC172EDF37007A478B /* screechright.ogg */; };
+		4E870AF9172EDF4D007A478B /* easy.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AF4172EDF4D007A478B /* easy.ogg */; };
+		4E870AFA172EDF4D007A478B /* hard.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AF5172EDF4D007A478B /* hard.ogg */; };
+		4E870AFB172EDF4D007A478B /* insanity.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AF6172EDF4D007A478B /* insanity.ogg */; };
+		4E870AFC172EDF4D007A478B /* normal.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AF7172EDF4D007A478B /* normal.ogg */; };
+		4E870B00172EDF58007A478B /* game.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AFE172EDF58007A478B /* game.ogg */; };
+		4E870B01172EDF58007A478B /* title.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4E870AFF172EDF58007A478B /* title.ogg */; };
 		4E8D6B14172C3D7E0036F7C1 /* sndfile.framework in Resources */ = {isa = PBXBuildFile; fileRef = 4E059841172BA5EE00ADD283 /* sndfile.framework */; };
 		4E8D6B15172C3D7E0036F7C1 /* sfml-audio.framework in Resources */ = {isa = PBXBuildFile; fileRef = 4E05983D172BA19200ADD283 /* sfml-audio.framework */; };
+		4EB9024B172EFA7B0038A6C9 /* psychedelic.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9024A172EFA7B0038A6C9 /* psychedelic.ogg */; };
+		4EB9024D172EFB2B0038A6C9 /* bummer.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9024C172EFB2B0038A6C9 /* bummer.ogg */; };
+		4EB90251172EFE130038A6C9 /* combo1.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90250172EFE130038A6C9 /* combo1.ogg */; };
+		4EB90253172EFE7F0038A6C9 /* combo2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90252172EFE7F0038A6C9 /* combo2.ogg */; };
+		4EB90266172F003B0038A6C9 /* combo3.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90254172F003B0038A6C9 /* combo3.ogg */; };
+		4EB90267172F003B0038A6C9 /* combo4.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90255172F003B0038A6C9 /* combo4.ogg */; };
+		4EB90268172F003B0038A6C9 /* combo5.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90256172F003B0038A6C9 /* combo5.ogg */; };
+		4EB90269172F003B0038A6C9 /* combo6.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90257172F003B0038A6C9 /* combo6.ogg */; };
+		4EB9026A172F003B0038A6C9 /* combo7.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90258172F003B0038A6C9 /* combo7.ogg */; };
+		4EB9026B172F003B0038A6C9 /* combo8.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90259172F003B0038A6C9 /* combo8.ogg */; };
+		4EB9026C172F003B0038A6C9 /* combo9.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025A172F003B0038A6C9 /* combo9.ogg */; };
+		4EB9026D172F003B0038A6C9 /* combo10.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025B172F003B0038A6C9 /* combo10.ogg */; };
+		4EB9026E172F003B0038A6C9 /* combo11.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025C172F003B0038A6C9 /* combo11.ogg */; };
+		4EB9026F172F003B0038A6C9 /* combo12.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025D172F003B0038A6C9 /* combo12.ogg */; };
+		4EB90270172F003B0038A6C9 /* combo13.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025E172F003B0038A6C9 /* combo13.ogg */; };
+		4EB90271172F003B0038A6C9 /* combo14.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9025F172F003B0038A6C9 /* combo14.ogg */; };
+		4EB90272172F003B0038A6C9 /* combo15.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90260172F003B0038A6C9 /* combo15.ogg */; };
+		4EB90273172F003B0038A6C9 /* combo16.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90261172F003B0038A6C9 /* combo16.ogg */; };
+		4EB90274172F003B0038A6C9 /* combo17.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90262172F003B0038A6C9 /* combo17.ogg */; };
+		4EB90275172F003B0038A6C9 /* combo18.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90263172F003B0038A6C9 /* combo18.ogg */; };
+		4EB90276172F003B0038A6C9 /* combo19.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90264172F003B0038A6C9 /* combo19.ogg */; };
+		4EB90277172F003B0038A6C9 /* combo20.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB90265172F003B0038A6C9 /* combo20.ogg */; };
+		4EB9027D172F06F60038A6C9 /* beep.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB9027C172F06F60038A6C9 /* beep.ogg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,17 +75,51 @@
 		4E0BA2F3172B8A3400BB865E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4E0BA2FE172B8F7D00BB865E /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		4E0BA300172B8F8400BB865E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		4E0D9497172CD1A90027F78D /* beep.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = beep.ogg; path = ../../../../../../Desktop/beep.ogg; sourceTree = "<group>"; };
-		4E0D9499172CD3960027F78D /* powerdown.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = powerdown.ogg; path = ../../../../../../Desktop/powerdown.ogg; sourceTree = "<group>"; };
-		4E0D949B172CD4540027F78D /* powerup.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = powerup.ogg; path = ../../../../../../Desktop/powerup.ogg; sourceTree = "<group>"; };
-		4E0D949D172CD4BD0027F78D /* boop.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = boop.ogg; path = ../../../../../../Desktop/boop.ogg; sourceTree = "<group>"; };
-		4E0D94A3172CE2300027F78D /* highbeep.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = highbeep.ogg; path = ../../../../../../Desktop/highbeep.ogg; sourceTree = "<group>"; };
-		4E0D94A7172CEF7A0027F78D /* jam.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = jam.ogg; path = ../../../../../../Desktop/jam.ogg; sourceTree = "<group>"; };
 		4E2481AD172C29D900F9ADFE /* Shape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shape.cpp; sourceTree = "<group>"; };
 		4E2481AE172C29D900F9ADFE /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
-		4E53D76D172DC053007AA621 /* screechleft.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechleft.ogg; path = ../../../../../../Desktop/screechleft.ogg; sourceTree = "<group>"; };
-		4E53D76E172DC053007AA621 /* screechright.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechright.ogg; path = ../../../../../../Desktop/screechright.ogg; sourceTree = "<group>"; };
 		4E53D771172DFA03007AA621 /* icon1.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon1.icns; sourceTree = "<group>"; };
+		4E53D773172E08AA007AA621 /* traffic-jamicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "traffic-jamicon.icns"; sourceTree = "<group>"; };
+		4E53D775172E0E1B007AA621 /* ludumintro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ludumintro.png; path = "../../../../Game Design/LD26 Minimalism/ludumintro.png"; sourceTree = "<group>"; };
+		4E53D777172E0E9A007AA621 /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "../../../../../../../Library/Frameworks/sfml-graphics.framework"; sourceTree = "<group>"; };
+		4E6655D9172EF50A0057ADDC /* trafficjam.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = trafficjam.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/trafficjam.ogg"; sourceTree = "<group>"; };
+		4E6655DD172EF5320057ADDC /* combobreaker.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combobreaker.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combobreaker.ogg"; sourceTree = "<group>"; };
+		4E6655E1172EF54B0057ADDC /* wimp.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = wimp.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/wimp.ogg"; sourceTree = "<group>"; };
+		4E6655E3172EF5E00057ADDC /* potato.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = potato.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/difficulties/potato.ogg"; sourceTree = "<group>"; };
+		4E870AC7172EDF37007A478B /* boop.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = boop.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/boop.ogg"; sourceTree = "<group>"; };
+		4E870AC8172EDF37007A478B /* highbeep.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = highbeep.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/highbeep.ogg"; sourceTree = "<group>"; };
+		4E870AC9172EDF37007A478B /* powerdown.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = powerdown.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/powerdown.ogg"; sourceTree = "<group>"; };
+		4E870ACA172EDF37007A478B /* powerup.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = powerup.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/powerup.ogg"; sourceTree = "<group>"; };
+		4E870ACB172EDF37007A478B /* screechleft.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechleft.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/screechleft.ogg"; sourceTree = "<group>"; };
+		4E870ACC172EDF37007A478B /* screechright.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = screechright.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/screechright.ogg"; sourceTree = "<group>"; };
+		4E870AF4172EDF4D007A478B /* easy.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = easy.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/difficulties/easy.ogg"; sourceTree = "<group>"; };
+		4E870AF5172EDF4D007A478B /* hard.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = hard.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/difficulties/hard.ogg"; sourceTree = "<group>"; };
+		4E870AF6172EDF4D007A478B /* insanity.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = insanity.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/difficulties/insanity.ogg"; sourceTree = "<group>"; };
+		4E870AF7172EDF4D007A478B /* normal.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = normal.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/difficulties/normal.ogg"; sourceTree = "<group>"; };
+		4E870AFE172EDF58007A478B /* game.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = game.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/music/game.ogg"; sourceTree = "<group>"; };
+		4E870AFF172EDF58007A478B /* title.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = title.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/music/title.ogg"; sourceTree = "<group>"; };
+		4EB9024A172EFA7B0038A6C9 /* psychedelic.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = psychedelic.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/psychedelic.ogg"; sourceTree = "<group>"; };
+		4EB9024C172EFB2B0038A6C9 /* bummer.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = bummer.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/bummer.ogg"; sourceTree = "<group>"; };
+		4EB90250172EFE130038A6C9 /* combo1.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo1.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo1.ogg"; sourceTree = "<group>"; };
+		4EB90252172EFE7F0038A6C9 /* combo2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo2.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo2.ogg"; sourceTree = "<group>"; };
+		4EB90254172F003B0038A6C9 /* combo3.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo3.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo3.ogg"; sourceTree = "<group>"; };
+		4EB90255172F003B0038A6C9 /* combo4.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo4.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo4.ogg"; sourceTree = "<group>"; };
+		4EB90256172F003B0038A6C9 /* combo5.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo5.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo5.ogg"; sourceTree = "<group>"; };
+		4EB90257172F003B0038A6C9 /* combo6.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo6.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo6.ogg"; sourceTree = "<group>"; };
+		4EB90258172F003B0038A6C9 /* combo7.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo7.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo7.ogg"; sourceTree = "<group>"; };
+		4EB90259172F003B0038A6C9 /* combo8.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo8.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo8.ogg"; sourceTree = "<group>"; };
+		4EB9025A172F003B0038A6C9 /* combo9.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo9.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo9.ogg"; sourceTree = "<group>"; };
+		4EB9025B172F003B0038A6C9 /* combo10.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo10.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo10.ogg"; sourceTree = "<group>"; };
+		4EB9025C172F003B0038A6C9 /* combo11.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo11.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo11.ogg"; sourceTree = "<group>"; };
+		4EB9025D172F003B0038A6C9 /* combo12.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo12.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo12.ogg"; sourceTree = "<group>"; };
+		4EB9025E172F003B0038A6C9 /* combo13.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo13.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo13.ogg"; sourceTree = "<group>"; };
+		4EB9025F172F003B0038A6C9 /* combo14.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo14.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo14.ogg"; sourceTree = "<group>"; };
+		4EB90260172F003B0038A6C9 /* combo15.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo15.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo15.ogg"; sourceTree = "<group>"; };
+		4EB90261172F003B0038A6C9 /* combo16.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo16.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo16.ogg"; sourceTree = "<group>"; };
+		4EB90262172F003B0038A6C9 /* combo17.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo17.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo17.ogg"; sourceTree = "<group>"; };
+		4EB90263172F003B0038A6C9 /* combo18.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo18.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo18.ogg"; sourceTree = "<group>"; };
+		4EB90264172F003B0038A6C9 /* combo19.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo19.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo19.ogg"; sourceTree = "<group>"; };
+		4EB90265172F003B0038A6C9 /* combo20.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = combo20.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/combos/combo20.ogg"; sourceTree = "<group>"; };
+		4EB9027C172F06F60038A6C9 /* beep.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = beep.ogg; path = "../../../../../../Desktop/LD26 - Minimalism/new sound/beep.ogg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E53D778172E0E9A007AA621 /* sfml-graphics.framework in Frameworks */,
 				4E059842172BA5EE00ADD283 /* sndfile.framework in Frameworks */,
 				4E05983E172BA19200ADD283 /* sfml-audio.framework in Frameworks */,
 				4E0BA301172B8F8400BB865E /* OpenGL.framework in Frameworks */,
@@ -73,14 +142,10 @@
 		4E059844172BA79E00ADD283 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4E53D76D172DC053007AA621 /* screechleft.ogg */,
-				4E53D76E172DC053007AA621 /* screechright.ogg */,
-				4E0D94A7172CEF7A0027F78D /* jam.ogg */,
-				4E0D94A3172CE2300027F78D /* highbeep.ogg */,
-				4E0D949D172CD4BD0027F78D /* boop.ogg */,
-				4E0D949B172CD4540027F78D /* powerup.ogg */,
-				4E0D9499172CD3960027F78D /* powerdown.ogg */,
-				4E0D9497172CD1A90027F78D /* beep.ogg */,
+				4E870AC3172EDF11007A478B /* music */,
+				4E870AC2172EDF08007A478B /* sound */,
+				4E870AC1172EDEEB007A478B /* art */,
+				4E53D775172E0E1B007AA621 /* ludumintro.png */,
 			);
 			name = Resources;
 			path = LD26Test;
@@ -89,6 +154,8 @@
 		4E0BA2DB172B8A3400BB865E = {
 			isa = PBXGroup;
 			children = (
+				4E53D777172E0E9A007AA621 /* sfml-graphics.framework */,
+				4E53D773172E08AA007AA621 /* traffic-jamicon.icns */,
 				4E53D771172DFA03007AA621 /* icon1.icns */,
 				4E0BA300172B8F8400BB865E /* OpenGL.framework */,
 				4E0BA2FE172B8F7D00BB865E /* GLUT.framework */,
@@ -137,6 +204,82 @@
 				4E0BA2F2172B8A3400BB865E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4E870AC1172EDEEB007A478B /* art */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = art;
+			sourceTree = "<group>";
+		};
+		4E870AC2172EDF08007A478B /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				4EB9027C172F06F60038A6C9 /* beep.ogg */,
+				4EB9024C172EFB2B0038A6C9 /* bummer.ogg */,
+				4EB9024A172EFA7B0038A6C9 /* psychedelic.ogg */,
+				4E6655DD172EF5320057ADDC /* combobreaker.ogg */,
+				4E6655D9172EF50A0057ADDC /* trafficjam.ogg */,
+				4E870AC7172EDF37007A478B /* boop.ogg */,
+				4E870AC8172EDF37007A478B /* highbeep.ogg */,
+				4E870AC9172EDF37007A478B /* powerdown.ogg */,
+				4E870ACA172EDF37007A478B /* powerup.ogg */,
+				4E870ACB172EDF37007A478B /* screechleft.ogg */,
+				4E870ACC172EDF37007A478B /* screechright.ogg */,
+				4E6655E1172EF54B0057ADDC /* wimp.ogg */,
+				4E870AC5172EDF21007A478B /* difficulty */,
+				4E870AC4172EDF1D007A478B /* combo */,
+			);
+			name = sound;
+			sourceTree = "<group>";
+		};
+		4E870AC3172EDF11007A478B /* music */ = {
+			isa = PBXGroup;
+			children = (
+				4E870AFE172EDF58007A478B /* game.ogg */,
+				4E870AFF172EDF58007A478B /* title.ogg */,
+			);
+			name = music;
+			sourceTree = "<group>";
+		};
+		4E870AC4172EDF1D007A478B /* combo */ = {
+			isa = PBXGroup;
+			children = (
+				4EB90254172F003B0038A6C9 /* combo3.ogg */,
+				4EB90255172F003B0038A6C9 /* combo4.ogg */,
+				4EB90256172F003B0038A6C9 /* combo5.ogg */,
+				4EB90257172F003B0038A6C9 /* combo6.ogg */,
+				4EB90258172F003B0038A6C9 /* combo7.ogg */,
+				4EB90259172F003B0038A6C9 /* combo8.ogg */,
+				4EB9025A172F003B0038A6C9 /* combo9.ogg */,
+				4EB9025B172F003B0038A6C9 /* combo10.ogg */,
+				4EB9025C172F003B0038A6C9 /* combo11.ogg */,
+				4EB9025D172F003B0038A6C9 /* combo12.ogg */,
+				4EB9025E172F003B0038A6C9 /* combo13.ogg */,
+				4EB9025F172F003B0038A6C9 /* combo14.ogg */,
+				4EB90260172F003B0038A6C9 /* combo15.ogg */,
+				4EB90261172F003B0038A6C9 /* combo16.ogg */,
+				4EB90262172F003B0038A6C9 /* combo17.ogg */,
+				4EB90263172F003B0038A6C9 /* combo18.ogg */,
+				4EB90264172F003B0038A6C9 /* combo19.ogg */,
+				4EB90265172F003B0038A6C9 /* combo20.ogg */,
+				4EB90252172EFE7F0038A6C9 /* combo2.ogg */,
+				4EB90250172EFE130038A6C9 /* combo1.ogg */,
+			);
+			name = combo;
+			sourceTree = "<group>";
+		};
+		4E870AC5172EDF21007A478B /* difficulty */ = {
+			isa = PBXGroup;
+			children = (
+				4E6655E3172EF5E00057ADDC /* potato.ogg */,
+				4E870AF4172EDF4D007A478B /* easy.ogg */,
+				4E870AF5172EDF4D007A478B /* hard.ogg */,
+				4E870AF6172EDF4D007A478B /* insanity.ogg */,
+				4E870AF7172EDF4D007A478B /* normal.ogg */,
+			);
+			name = difficulty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,15 +337,48 @@
 				4E8D6B14172C3D7E0036F7C1 /* sndfile.framework in Resources */,
 				4E8D6B15172C3D7E0036F7C1 /* sfml-audio.framework in Resources */,
 				4E0BA2F4172B8A3400BB865E /* InfoPlist.strings in Resources */,
-				4E0D9498172CD1A90027F78D /* beep.ogg in Resources */,
-				4E0D949A172CD3960027F78D /* powerdown.ogg in Resources */,
-				4E0D949C172CD4540027F78D /* powerup.ogg in Resources */,
-				4E0D949E172CD4BD0027F78D /* boop.ogg in Resources */,
-				4E0D94A4172CE2300027F78D /* highbeep.ogg in Resources */,
-				4E0D94A8172CEF7A0027F78D /* jam.ogg in Resources */,
-				4E53D76F172DC053007AA621 /* screechleft.ogg in Resources */,
-				4E53D770172DC053007AA621 /* screechright.ogg in Resources */,
 				4E53D772172DFA03007AA621 /* icon1.icns in Resources */,
+				4E53D774172E08AA007AA621 /* traffic-jamicon.icns in Resources */,
+				4E53D776172E0E1B007AA621 /* ludumintro.png in Resources */,
+				4E870ACE172EDF37007A478B /* boop.ogg in Resources */,
+				4E870ACF172EDF37007A478B /* highbeep.ogg in Resources */,
+				4E870AD0172EDF37007A478B /* powerdown.ogg in Resources */,
+				4E870AD1172EDF37007A478B /* powerup.ogg in Resources */,
+				4E870AD2172EDF37007A478B /* screechleft.ogg in Resources */,
+				4E870AD3172EDF37007A478B /* screechright.ogg in Resources */,
+				4E870AF9172EDF4D007A478B /* easy.ogg in Resources */,
+				4E870AFA172EDF4D007A478B /* hard.ogg in Resources */,
+				4E870AFB172EDF4D007A478B /* insanity.ogg in Resources */,
+				4E870AFC172EDF4D007A478B /* normal.ogg in Resources */,
+				4E870B00172EDF58007A478B /* game.ogg in Resources */,
+				4E870B01172EDF58007A478B /* title.ogg in Resources */,
+				4E6655DA172EF50A0057ADDC /* trafficjam.ogg in Resources */,
+				4E6655DE172EF5320057ADDC /* combobreaker.ogg in Resources */,
+				4E6655E2172EF54B0057ADDC /* wimp.ogg in Resources */,
+				4E6655E4172EF5E00057ADDC /* potato.ogg in Resources */,
+				4EB9024B172EFA7B0038A6C9 /* psychedelic.ogg in Resources */,
+				4EB9024D172EFB2B0038A6C9 /* bummer.ogg in Resources */,
+				4EB90251172EFE130038A6C9 /* combo1.ogg in Resources */,
+				4EB90253172EFE7F0038A6C9 /* combo2.ogg in Resources */,
+				4EB90266172F003B0038A6C9 /* combo3.ogg in Resources */,
+				4EB90267172F003B0038A6C9 /* combo4.ogg in Resources */,
+				4EB90268172F003B0038A6C9 /* combo5.ogg in Resources */,
+				4EB90269172F003B0038A6C9 /* combo6.ogg in Resources */,
+				4EB9026A172F003B0038A6C9 /* combo7.ogg in Resources */,
+				4EB9026B172F003B0038A6C9 /* combo8.ogg in Resources */,
+				4EB9026C172F003B0038A6C9 /* combo9.ogg in Resources */,
+				4EB9026D172F003B0038A6C9 /* combo10.ogg in Resources */,
+				4EB9026E172F003B0038A6C9 /* combo11.ogg in Resources */,
+				4EB9026F172F003B0038A6C9 /* combo12.ogg in Resources */,
+				4EB90270172F003B0038A6C9 /* combo13.ogg in Resources */,
+				4EB90271172F003B0038A6C9 /* combo14.ogg in Resources */,
+				4EB90272172F003B0038A6C9 /* combo15.ogg in Resources */,
+				4EB90273172F003B0038A6C9 /* combo16.ogg in Resources */,
+				4EB90274172F003B0038A6C9 /* combo17.ogg in Resources */,
+				4EB90275172F003B0038A6C9 /* combo18.ogg in Resources */,
+				4EB90276172F003B0038A6C9 /* combo19.ogg in Resources */,
+				4EB90277172F003B0038A6C9 /* combo20.ogg in Resources */,
+				4EB9027D172F06F60038A6C9 /* beep.ogg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
