@@ -13,6 +13,9 @@ LD 26 Minimalism
 #include <SFML/Audio.hpp>
 #include <SFML/Audio/SoundSource.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Image.hpp>
+
+
 #include <GLUT/GLUT.h>
 #include <vector>
 #include <cstdlib>
@@ -107,11 +110,16 @@ sf::Music  potato;
 
 sf::Music comboSound[25];
 
+sf::Image titleScreen;
+sf::Image detScreen;
+sf::Image vindinceScreen;
+sf::Image ludumScreen;
+
 
 bool newCombo = false;
 bool brokeCombo= false;
 
-sf::Image ludumIntro;
+
 
 bool LEFT_MOUSE_DOWN;
 bool HELD_MOUSE;
@@ -205,7 +213,7 @@ int main(int argc, char** argv){
     }
     
     music.setLoop(true);
-    music.setVolume(45);
+    music.setVolume(65);
     
     if (!beep.openFromFile("beep.ogg")) {
         cout << "Error loading song..." << endl;
@@ -269,10 +277,7 @@ int main(int argc, char** argv){
     }
     
     
-    
 
-    
-    
     if (!comboSound[1].openFromFile("combo1.ogg")){
         cout << "Error loading combo sound..." << endl;
     }
@@ -350,11 +355,20 @@ int main(int argc, char** argv){
         cout << "Error loading combo sound..." << endl;
     }
     
-    
-    
-    if (!ludumIntro.loadFromFile("ludumintro.png")){
-        cout << "Error loading image..." << endl;
+    if (!titleScreen.loadFromFile("title.png")){
+        cout << "Could not load title screen" << endl;
     }
+
+    if (!detScreen.loadFromFile("det.png")){
+        cout << "Could not load title screen" << endl;
+    }
+    if (!vindinceScreen.loadFromFile("vindince.png")){
+        cout << "Could not load title screen" << endl;
+    }
+    if (!ludumScreen.loadFromFile("ludumintro26.png")){
+        cout << "Could not load title screen" << endl;
+    }
+    
     
 
     music.play();
@@ -392,6 +406,10 @@ void Init(){
 
     selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
     currentColor = (colors)selectColor;
+    
+    
+    
+    
     
 }
 
@@ -474,7 +492,7 @@ void GameLoop(){
 void CalculateDrawTime() {
     delta = glutGet( GLUT_ELAPSED_TIME ) * timeChunk - timeOfLastDraw;
     if (delta == 0){
-        delta = timeChunk;
+       // delta = timeChunk;
     }
     //cout << "Delta Time: " << delta << endl;
 }
@@ -514,6 +532,8 @@ void Display(){
 
     glClear(GL_COLOR_BUFFER_BIT);
 
+    
+    if (gameState == game){
     DrawTimer();
 
     for (auto i = objects.begin() ; i != objects.end() ; i++){
@@ -534,13 +554,8 @@ void Display(){
     char string[120];
     char * buffer;
 
-    cout << "cr " << cr << endl;
-    //if circle encompasses screen change text to black
-    if (cr >= 690){
-        glColor3f(0.0, 0.0, 0.0);
-    } else {
-        glColor3f(1.0, 1.0, 1.0);
-    }
+
+    glColor3f(1.0, 1.0, 1.0);
     
     if (combo > 0){
         sprintf(string,"%d", combo);
@@ -583,6 +598,13 @@ void Display(){
             break;
     }
     
+    //if circle encompasses screen change text to black
+    if (cr >= 690 && (currentColor == white ||currentColor == green) ){
+        glColor3f(0.0, 0.0, 0.0);
+    } else {
+        glColor3f(1.0, 1.0, 1.0);
+    }
+    
     buffer = string;
     
     int stringLength = 0;
@@ -590,7 +612,6 @@ void Display(){
     for (int i = 0; i < strlen(buffer); i ++){
         stringLength += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, buffer[i]);
     }
-    
     glRasterPos2f((WINDOWWIDTH/2) - stringLength / 2, WINDOWHEIGHT - 20);
     for (int i = 0; i < strlen(buffer); i ++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,buffer[i]);
@@ -598,6 +619,7 @@ void Display(){
 
     
     //GL END
+    }
     glutSwapBuffers();
 }
 
@@ -639,55 +661,55 @@ void OnKeyPress(unsigned char key , int x, int y){
             difficulty = 1;
             resetLevel = true;
             maxCombo = 0;
-            gameSpeed = difficulty * 100;
+            gameSpeed = difficulty * 200;
             angle = -4.7;
-            if (potato.getStatus() == 0 ){
+        
                 potato.play();
-            }
+            
             break;
             
         case '1':
             difficulty = 2;
             maxCombo = 0;
             resetLevel = true;
-            gameSpeed = difficulty * 100;
+            gameSpeed = difficulty * 200;
             angle = -4.7;
-            if (easy.getStatus() == 0 ){
+        
                 easy.play();
-            }
+            
             break;
             
         case '2':
             difficulty = 3;
             maxCombo = 0;
             resetLevel = true;
-            gameSpeed = difficulty * 100;
+            gameSpeed = difficulty * 200;
             angle = -4.7;
-            if (normal.getStatus() == 0 ){
+         
                 normal.play();
-            }
+            
             break;
             
         case '3':
             difficulty = 4;
             maxCombo = 0;
             resetLevel = true;
-            gameSpeed = difficulty * 100;
+            gameSpeed = difficulty * 200;
             angle = -4.7;
-            if (hard.getStatus() == 0 ){
+     
                 hard.play();
-            }
+            
             break;
             
         case '4':
             difficulty = 5;
             maxCombo = 0;
             resetLevel = true;
-            gameSpeed = difficulty * 100;
+            gameSpeed = difficulty * 200;
             angle = -4.7;
-            if (insanity.getStatus() == 0 ){
+ 
                 insanity.play();
-            }
+            
             break;
             
         
@@ -1064,8 +1086,8 @@ void UpdateScene(){
         resetLevel = false;
     }
     
-    if (gameSpeed <= 200) {
-        gameSpeed = 200;
+    if (gameSpeed <= 300) {
+        gameSpeed = 300;
     }
     //cr = 200;
     cx = WINDOWWIDTH/2;
@@ -1074,11 +1096,11 @@ void UpdateScene(){
     if (deflateTimer){
         deflateSpeed = 1000;
     } else {
-        deflateSpeed = 100;
+        deflateSpeed = 500;
     }
 
 
-    finalCR =  (difficulty * 2) * gameSpeed * .1 + (10 * (combo+1));
+    finalCR = (difficulty * 10) * gameSpeed * .01 + combo;
     
     if (cr < finalCR) {
         cr+= deflateSpeed * delta;
@@ -1203,7 +1225,6 @@ void UpdateScene(){
         highBeep.setVolume(55);
         highBeep.play();
         
-        cout << "random" << endl;
         selectColor = 0 + (int) (difficulty * (rand() / (RAND_MAX + 1.0)));
         
         if (difficulty !=1){
@@ -1213,7 +1234,7 @@ void UpdateScene(){
         }
         currentColor = (colors)selectColor;
         
-        gameSpeed-= gameSpeed * .15;
+        gameSpeed-= gameSpeed * .25;
         
         cradius -= 10;
         //cradius = 0;
@@ -1255,9 +1276,11 @@ void UpdateScene(){
     }
     
     
+   //cout << "game speed " << gameSpeed << endl;
     
-    if (gameSpeed > 100 + 250 * difficulty){
-        gameSpeed = 100 + 250 * difficulty;
+    if (gameSpeed > 100 + 350 * difficulty){
+        gameSpeed = 100 + 350 * difficulty;
+        cout << "MAX SPEED" << gameSpeed <<  endl;
     }
     
     if (timer <= 0){
@@ -1548,7 +1571,7 @@ void CheckCollisions(){
             //if player collides with object of same color then score goes down
             if (player->overlapping && test->currentColor != currentColor){
                 level--;
-                gameSpeed-=gameSpeed * .20;
+                gameSpeed-=gameSpeed * .40;
                 
                 cradius = 0;
                 cr = 1;

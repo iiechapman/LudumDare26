@@ -25,7 +25,7 @@ void Square::Draw(){
     glEnd();
     
     
-    glLineWidth(5);
+    glLineWidth(4);
     glBegin(GL_LINES);
 
     glColor3f(R/2, G/2, B/2 );
