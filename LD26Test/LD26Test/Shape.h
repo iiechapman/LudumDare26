@@ -28,14 +28,8 @@ public:
     directions direction;
     
     bool flipped;
-    bool shadow;
-    bool inside;
-    bool outside;
     bool overlapping;
-    bool colliding;
-    bool internalCollision;
-    bool exiting;
-    bool entering;
+    
     float x,y;
     int number;
     float vx,vy;
@@ -50,33 +44,17 @@ public:
     
     bool unique;
     bool active;
-    bool isGoal;
     bool isBonus;
-    bool isBad;
-    bool isGood;
     bool isObstacle;
-    bool isTeleport;
-    
-    
 };
 
-
-class Circle : public Shape{
-public:
-    
-    void Draw();
-    void Update(float delta);
-    bool Collide(Shape& rhs);
-    float radius;
-    
-};
 
 class Square : public Shape{
 public:
     void Draw();
     void Update(float delta);
     bool Collide(Shape& rhs);
-
+    
 };
 
 
